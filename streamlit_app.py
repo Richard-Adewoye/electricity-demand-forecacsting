@@ -2,4 +2,4 @@ import streamlit as st
 
 st.title('Electricity Demand Forecasting')
 
-st.write('Hello world!')
+st.info('This is a Machine Learning app that predicts based on Multiple Energy-related factors!')
