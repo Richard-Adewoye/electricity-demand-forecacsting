@@ -136,10 +136,10 @@ with st.sidebar:
       'wind_share_elec':wind_share_elec,
     }
 
-  # Covert to Dataframe
-  input_df = pd.DataFrame([input_dict])
+      # Covert to Dataframe
+      input_df = pd.DataFrame([input_dict])
 
-  # Make prediction
-  prediction = model.predict(input_df)
+      # Make prediction
+      prediction = model.predict(input_df)
 
-  st.success(f"Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}")
+      st.success(f"Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}")
