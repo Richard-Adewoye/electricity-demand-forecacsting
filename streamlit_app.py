@@ -10,13 +10,13 @@ st.info('This is a Machine Learning app that predicts based on Multiple Energy-r
 
 model = joblib.load('electricity_demand_xgboost_model.pkl')
 
-target_encoding_map = df.groupby('country')['gdp'].mean().to_dict()
-
 with st.expander('World Energy Consumption Dataset'):
   st.write('**Raw Data**')
   df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
   df
 
+  target_encoding_map = df.groupby('country')['gdp'].mean().to_dict()
+  
   st.write('**X**')
   X = df.drop(['electricity_demand'], axis=1)
   st.write(X)
