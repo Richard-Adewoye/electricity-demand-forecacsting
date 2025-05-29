@@ -17,7 +17,7 @@ with st.expander('World Energy Consumption Dataset'):
 
   mean_gdp_per_country = df.groupby('country')['gdp'].mean()
 
-  
+  target_encoding_map = df.groupby('country')['gdp'].mean().to_dict()
   
   st.write('**X**')
   X = df.drop(['electricity_demand'], axis=1)
