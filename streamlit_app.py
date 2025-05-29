@@ -25,5 +25,5 @@ with st.expander('Data visualisation'):
   selected_feature = st.selectbox("Select a feature to plot", numeric_columns)
 
   # Plot scatter chart for each country
-  st.write(f"Scatter plot of `{selected feature}` across countries")
+  st.write(f"Scatter plot of `{selected_feature}` across countries")
   st.scatter_chart(df[['country', selected_feature]])
