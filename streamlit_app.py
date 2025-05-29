@@ -18,3 +18,12 @@ with st.expander('World Energy Consumption Dataset'):
   st.write('**y**')
   y = df.electricity_demand
   st.write(y)
+  
+with st.expander('Data visualisation'):
+  # Let user pick a numeric feature
+  numeric_columns = df.select_dtypes(include=['float', 'int64']).columns.tolist()
+  selected_feature = st.selectbox("Select a feature to plot", numeric_columns)
+
+  # Plot scatter chart for each country
+  st.write(f"Scatter plot of `{selected feature}` across countries")
+  st.scatter_chart(df[['country', selected_feature]])
