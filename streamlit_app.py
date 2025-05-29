@@ -10,6 +10,8 @@ st.info('This is a Machine Learning app that predicts based on Multiple Energy-r
 
 model = joblib.load('electricity_demand_xgboost_model.pkl')
 
+target_encoding_map = df_train.groupby('country')['gdp'].mean().to_dict()
+
 with st.expander('World Energy Consumption Dataset'):
   st.write('**Raw Data**')
   df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
@@ -44,9 +46,13 @@ with st.sidebar:
   st.header('Please input the required features')
   #""year, population, gdp, coal_prod_change_pct, coal_prod_change_twh, coal_prod_per_capita, coal_production, electricity_demand, electricity_generation, energy_cons_change_pct, energy_cons_change_twh, energy_per_capita, energy_per_gdp, gas_prod_change_pct, gas_prod_change_twh, gas_prod_per_capita, gas_production, hydro_electricity, hydro_share_elec, low_carbon_elec_per_capita, low_carbon_electricity, low_carbon_share_elec, nuclear_elec_per_capita, nuclear_electricity, nuclear_share_elec, oil_prod_change_pct, oil_prod_change_twh, oil_prod_per_capita, oil_production, other_renewable_electricity, other_renewables_elec_per_capita, other_renewables_share_elec, primary_energy_consumption, renewables_elec_per_capita, renewables_electricity, renewables_share_elec, solar_elec_per_capita, solar_electricity, solar_share_elec, wind_elec_per_capita, wind_electricity, wind_share_elec""
   # To get the list of unique countries
-  countries = sorted(df['country'].unique())
+  countries = sorted(target_encoding_map.keys())
   
   country = st.selectbox('select a country:', countries)
+
+  # Get encoded value automatically
+  encoded_country = target_encoding_map[country]
+  
   year = st.slider('year', 2023, 2400, 2025)
   population = st.slider('population', 1000000000, 6000000000, 3000000000)
   gdp = st.slider('gdp', 134586329843, 912328463859, 123456789)
@@ -91,7 +97,7 @@ with st.sidebar:
 
   if st.button("Predict"):
     input_dict = {
-      'country':country,
+      'country':encoded_country,
       'year':year,
       'population':population,
       'gdp':gdp,
