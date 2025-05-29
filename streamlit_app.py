@@ -37,7 +37,7 @@ with st.expander('Data visualisation'):
   st.altair_chart(chart, use_container_width=True)
 
 # Data input
-with st.slidebar:
+with st.sidebar:
   st.header('Please input the required features')
   #""year, population, gdp, coal_prod_change_pct, coal_prod_change_twh, coal_prod_per_capita, coal_production, electricity_demand, electricity_generation, energy_cons_change_pct, energy_cons_change_twh, energy_per_capita, energy_per_gdp, gas_prod_change_pct, gas_prod_change_twh, gas_prod_per_capita, gas_production, hydro_electricity, hydro_share_elec, low_carbon_elec_per_capita, low_carbon_electricity, low_carbon_share_elec, nuclear_elec_per_capita, nuclear_electricity, nuclear_share_elec, oil_prod_change_pct, oil_prod_change_twh, oil_prod_per_capita, oil_production, other_renewable_electricity, other_renewables_elec_per_capita, other_renewables_share_elec, primary_energy_consumption, renewables_elec_per_capita, renewables_electricity, renewables_share_elec, solar_elec_per_capita, solar_electricity, solar_share_elec, wind_elec_per_capita, wind_electricity, wind_share_elec""
   # To get the list of unique countries
