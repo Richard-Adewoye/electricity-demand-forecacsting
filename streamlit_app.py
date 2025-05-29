@@ -12,7 +12,7 @@ with st.expander('World Energy Consumption Dataset'):
   df
 
   st.write('**X**')
-  X = df.drop('electricity_demand', axis=1)
+  X = df.drop['electricity_demand', axis=1]
 
   st.write('**y**')
   y = df.electricity_demand
