@@ -43,7 +43,7 @@ with st.sidebar:
   # To get the list of unique countries
   countries = sorted(df['country'].unique())
   
-  country = st.selectBox('select a country:', countries)
+  country = st.selectbox('select a country:', countries)
   year = st.slider('year', 2023, 2400, 2025)
   population = st.slider('population', 1000000000, 6000000000, 3000000000)
   gdp = st.slider('gdp', 134586329843, 912328463859, 123456789)
