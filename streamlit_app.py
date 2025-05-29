@@ -147,17 +147,17 @@ with st.sidebar:
     # Covert to Dataframe
     input_df = pd.DataFrame([input_dict])
 
-   # Get expected features
-   expected_features = model.get_booster().feature_names
+     # Get expected features
+     expected_features = model.get_booster().feature_names
 
 
-  # Ensure all expected features are present in input_df
-  for feature in expected_features:
-    if feature not in input_df.columns:
-      input_df[feature] = 0 # or another default
+    # Ensure all expected features are present in input_df
+    for feature in expected_features:
+      if feature not in input_df.columns:
+        input_df[feature] = 0 # or another default
 
-  # keep only the expected columns, in order
-  input_df = input_df[expected_features]
+    # keep only the expected columns, in order
+    input_df = input_df[expected_features]
 
     # Make prediction
     prediction = model.predict(input_df)
