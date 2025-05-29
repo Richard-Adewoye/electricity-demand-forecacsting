@@ -10,3 +10,10 @@ with st.expander('World Energy Consumption Dataset'):
   st.write('**Raw Data**')
   df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
   df
+
+  st.write('**X**')
+  X = df.drop('electricity_demand', axis=1)
+
+  st.write('**y**')
+  y = df.electricity_demand
+  y
