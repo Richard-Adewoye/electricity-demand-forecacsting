@@ -26,12 +26,11 @@ with st.expander('Data visualisation'):
 
 # Create scatter plot using Altair
 chart = alt.Chart(df).mark_circle(size=60).encode(
-  x=alt.X('country:N', sort='y'), # x-axis as categorical
+  x=alt.X('country:N', sort='-y'), # x-axis as categorical
   y=alt.Y(selected_feature, title=selected_feature),
   tooltip=['country', selected_feature]
 ).properties(
   width=700,
   height=400
-).interactive()
 
 st.altair_chart(chart, use_container_width=True)
