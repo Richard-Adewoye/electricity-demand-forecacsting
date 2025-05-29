@@ -99,7 +99,6 @@ with st.sidebar:
       'coal_prod_change_twh':coal_prod_change_twh,
       'coal_prod_per_capita':coal_prod_per_capita,
       'coal_production':coal_production,
-      'electricity_demand':electricity_demand,
       'electricity_generation':electricity_generation,
       'energy_cons_change_pct':energy_cons_change_pct,
       'energy_cons_change_twh':energy_cons_change_twh,
