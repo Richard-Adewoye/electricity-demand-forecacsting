@@ -148,7 +148,7 @@ with st.sidebar:
     input_df = pd.DataFrame([input_dict])
 
     # Align columns with model feature order
-    input_df = input_df[model.feature_names]
+    #input_df = input_df[model.feature_names]
     
     # Make prediction
     prediction = model.predict(input_df)
