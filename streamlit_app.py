@@ -31,6 +31,6 @@ chart = alt.Chart(df).mark_circle(size=60).encode(
   tooltip=['country', selected_feature]
 ).properties(
   width=700,
-  height=400
+  height=400)
 
 st.altair_chart(chart, use_container_width=True)
