@@ -24,13 +24,13 @@ with st.expander('Data visualisation'):
   numeric_columns = df.select_dtypes(include=['float', 'int64']).columns.tolist()
   selected_feature = st.selectbox("Select a feature to plot", numeric_columns)
 
-# Create scatter plot using Altair
-chart = alt.Chart(df).mark_circle(size=60).encode(
-  x=alt.X('country:N', sort='-y'), # x-axis as categorical
-  y=alt.Y(selected_feature, title=selected_feature),
-  tooltip=['country', selected_feature]
-).properties(
-  width=700,
-  height=400)
+  # Create scatter plot using Altair
+  chart = alt.Chart(df).mark_circle(size=60).encode(
+    x=alt.X('country:N', sort='-y'), # x-axis as categorical
+    y=alt.Y(selected_feature, title=selected_feature),
+    tooltip=['country', selected_feature]
+  ).properties(
+    width=700,
+    height=400)
 
-st.altair_chart(chart, use_container_width=True)
+  st.altair_chart(chart, use_container_width=True)
