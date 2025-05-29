@@ -147,8 +147,8 @@ with st.sidebar:
     # Covert to Dataframe
     input_df = pd.DataFrame([input_dict])
 
-     # Get expected features
-     expected_features = model.get_booster().feature_names
+    # Get expected features
+    expected_features = model.get_booster().feature_names
 
 
     # Ensure all expected features are present in input_df
