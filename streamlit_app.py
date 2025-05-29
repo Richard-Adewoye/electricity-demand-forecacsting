@@ -15,7 +15,9 @@ with st.expander('World Energy Consumption Dataset'):
   df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
   df
 
-  target_encoding_map = df.groupby('country')['gdp'].mean().to_dict()
+  mean_gdp_per_country = df.groupby('country')['gdp'].mean()
+
+  
   
   st.write('**X**')
   X = df.drop(['electricity_demand'], axis=1)
@@ -50,9 +52,10 @@ with st.sidebar:
   
   country = st.selectbox('select a country:', countries)
 
-  # Get encoded value automatically
-  encoded_country = target_encoding_map[country]
+  # Map selected country to encoded value
+  country_encoded_value = mean_gdp_per_country[country]
   
+   
   year = st.slider('year', 2023, 2400, 2025)
   population = st.slider('population', 1000000000, 6000000000, 3000000000)
   gdp = st.slider('gdp', 134586329843, 912328463859, 123456789)
@@ -97,7 +100,7 @@ with st.sidebar:
 
   if st.button("Predict"):
     input_dict = {
-      'country':encoded_country,
+      'country_encoded':country_encoded_value,
       'year':year,
       'population':population,
       'gdp':gdp,
@@ -144,6 +147,9 @@ with st.sidebar:
     # Covert to Dataframe
     input_df = pd.DataFrame([input_dict])
 
+    # Align columns with model feature order
+    input_df = input_df[model.feature_names]
+    
     # Make prediction
     prediction = model.predict(input_df)
 
