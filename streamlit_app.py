@@ -13,6 +13,8 @@ model = joblib.load('electricity_demand_xgboost_model.pkl')
 with st.expander('World Energy Consumption Dataset'):
   st.write('**Raw Data**')
   df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
+  countries_to_drop = ['ASEAN (Ember)', 'Africa', 'Africa (EI)', 'Africa (Ember)', 'Africa (Shift)', 'Asia', 'Asia & Oceania (EIA)', 'Asia (Ember)', 'Asia Pacific (EI)', 'Asia and Oceania (Shift)', 'Australia and New Zealand (EIA)', 'CIS (EI)', 'Central & South America (EIA)', 'Central America (EI)', 'Central and South America (Shift)', 'EU28 (Shift)', 'Eastern Africa (EI)', 'Eurasia (EIA)', 'Eurasia (Shift)', 'Europe', 'Europe (EI)', 'Europe (Ember)', 'Europe (Shift)', 'European Union (27)', 'French Polynesia', 'G20 (Ember)', 'G7 (Ember)', 'High-income countries', 'IEO - Africa (EIA)', 'IEO - Middle East (EIA)', 'IEO OECD - Europe (EIA)', 'Low-income countries', 'Lower-middle-income countries', 'Mexico, Chile, and other OECD Americas (EIA)', 'Middle Africa (EI)', 'Middle East (EI)', 'Non-OECD (EI)', 'Non-OECD (EI)', 'Non-OPEC (EI)', 'OECD (EI)', 'OECD (EIA)', 'OECD (Ember)', 'OECD (Shift)', 'OECD - Asia And Oceania (EIA)', 'OECD - Europe (EIA)', 'OECD - North America (EIA)', 'OPEC (EI)', 'OPEC (EIA)', 'OPEC (Shift)', 'OPEC - Africa (EIA)', 'OPEC - South America (EIA)', 'Oceania', 'Oceania (Ember)', 'Other Non-OECD - America (EIA)', 'Persian Gulf (EIA)', 'Reunion', 'South and Central America (EI)', 'U.S. Territories (EIA)', 'Upper-middle-income countries', 'Western Africa (EI)', 'Western Sahara', 'World']
+  df = df[~df['country'].isin(countries_to_drop)]
   df
 
   mean_gdp_per_country = df.groupby('country')['gdp'].mean()
