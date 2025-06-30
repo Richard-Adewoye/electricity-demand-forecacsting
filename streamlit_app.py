@@ -36,6 +36,30 @@ with st.expander('Data visualisation'):
     )
 
     st.altair_chart(chart, use_container_width=True)
+    
+with st.expander("Pie Chart: Country Share of Selected Feature"):
+    st.write("### Pie Chart Based on Aggregated Values")
+
+    # Let user select a numeric feature
+    selected_feature = st.selectbox("Select a feature for aggregation", df.select_dtypes(include=['float', 'int64']).columns.tolist(), key="pie")
+
+    # Aggregate (mean) by country
+    agg_data = df.groupby('country')[selected_feature].mean().reset_index()
+
+    # Sort and take top 10 for readability (optional)
+    agg_data = agg_data.sort_values(by=selected_feature, ascending=False).head(10)
+
+    # Create pie chart using Altair
+    pie_chart = alt.Chart(agg_data).mark_arc().encode(
+        theta=alt.Theta(field=selected_feature, type="quantitative"),
+        color=alt.Color(field="country", type="nominal"),
+        tooltip=["country", selected_feature]
+    ).properties(
+        title=f"Top 10 Countries by Average {selected_feature}"
+    )
+
+    st.altair_chart(pie_chart, use_container_width=True)
+
 
 with st.expander('World Energy Consumption Dataset'):
   st.write('**Raw Data**')
