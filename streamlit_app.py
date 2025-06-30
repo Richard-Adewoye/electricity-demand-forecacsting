@@ -40,7 +40,7 @@ with st.expander('Data visualisation'):
     feature_by_country = df.groupby('country')[selected_feature].mean().reset_index()
 
     # Sort by feature value descending
-    feature_by_country = feature_by_country.sort_values(by=selected_feature, ascending=False)
+    feature_by_country = feature_by_country.sort_values(by=selected_feature, ascending=False).head(20)
 
     # Create bar chart
     chart = alt.Chart(feature_by_country).mark_bar().encode(
