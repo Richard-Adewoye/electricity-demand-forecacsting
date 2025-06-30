@@ -87,10 +87,17 @@ with st.sidebar:
   # To get the list of unique countries
   countries = sorted(target_encoding_map.keys())
 
-  search_term = st.text_input("Search for a country")
-  filtered_countries = [c for c in df['country'].unique() if search_term.lower() in c.lower()]
-  country = st.selectbox('Select a Country', sorted(filtered_countries)) if filtered_countries else st.warning("No Country matches your search")
+  # Apply search filtering
+search_term = st.text_input("Search for a country")
+filtered_countries = [c for c in countries if search_term.lower() in c.lower()]
 
+# Set Nigeria as default (if present)
+if filtered_countries:
+    default_index = filtered_countries.index("Nigeria") if "Nigeria" in filtered_countries else 0
+    country = st.selectbox('Select a Country', filtered_countries, index=default_index)
+else:
+    st.warning("No Country matches your search")
+    country = None
   # Map selected country to encoded value
   country_encoded_value = mean_gdp_per_country[country]
   
