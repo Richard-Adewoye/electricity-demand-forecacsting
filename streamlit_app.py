@@ -98,8 +98,8 @@ if filtered_countries:
 else:
     st.warning("No Country matches your search")
     country = None
-  # Map selected country to encoded value
-  country_encoded_value = mean_gdp_per_country[country]
+# Map selected country to encoded value
+country_encoded_value = mean_gdp_per_country[country]
   
    
   year = st.slider('year', 2023, 2025, 2099)
