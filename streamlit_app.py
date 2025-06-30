@@ -82,6 +82,33 @@ with st.expander('World Energy Consumption Dataset'):
   y = df.electricity_demand
   st.write(y)
 
+import plotly.express as px
+
+with st.expander("🌍 Global Choropleth: Average Electricity Demand"):
+    st.markdown("This map shows average electricity demand per country.")
+
+    # Compute average electricity demand per country
+    avg_demand = df.groupby('country', as_index=False)['electricity_demand'].mean()
+    avg_demand.columns = ['country', 'avg_electricity_demand']
+
+    # Plot using Plotly
+    fig = px.choropleth(
+        avg_demand,
+        locations='country',
+        locationmode='country names',
+        color='avg_electricity_demand',
+        color_continuous_scale='Viridis',
+        title='Average Electricity Demand by Country',
+    )
+
+    fig.update_layout(
+        geo=dict(showframe=False, showcoastlines=False),
+        margin=dict(l=0, r=0, t=30, b=0)
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
 # Data input
 with st.sidebar:
     st.header('Please input the required features')
