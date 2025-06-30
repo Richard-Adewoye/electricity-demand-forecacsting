@@ -71,7 +71,7 @@ with st.sidebar:
   country_encoded_value = mean_gdp_per_country[country]
   
    
-  year = st.slider('year', 2023, 2400, 2025)
+  year = st.slider('year', 2023, 2025, 2099)
   population = st.slider('population', 1000000000, 6000000000, 3000000000)
   gdp = st.slider('gdp', 134586329843, 912328463859, 123456789)
   coal_prod_change_pct = st.slider('coal_prod_change_pct', 37.43, 90.32, 65.43)
