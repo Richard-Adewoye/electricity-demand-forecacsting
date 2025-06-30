@@ -10,6 +10,19 @@ st.info('This is a Machine Learning app that predicts based on Multiple Energy-r
 
 df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
 model = joblib.load('electricity_demand_xgboost_model.pkl')
+# Dynamic Help Section
+with st.expander("🧭 How to Use This Web App"):
+    if country is None:
+        st.warning("🔍 No country selected. Use the sidebar search box to find and select a country (e.g., Nigeria).")
+    elif st.session_state.get("prediction_made") is not True:
+        st.markdown("""
+        ✅ You have selected **{0}**.  
+        👉 Now, adjust the sliders in the sidebar to match the scenario you'd like to forecast.  
+        When ready, click **Predict** at the bottom of the sidebar to see the electricity demand.
+        """.format("Nigeria" if "Nigeria" in filtered_countries else country))
+    else:
+        st.success("🎉 Prediction completed! You can adjust features and click Predict again to test other scenarios.")
+
 
 with st.expander('Data visualisation'):
     st.write("### Compare Countries by Feature")
