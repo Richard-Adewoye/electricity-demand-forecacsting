@@ -30,20 +30,31 @@ with st.expander('World Energy Consumption Dataset'):
   st.write(y)
   
 with st.expander('Data visualisation'):
-  # Let user pick a numeric feature
-  numeric_columns = df.select_dtypes(include=['float', 'int64']).columns.tolist()
-  selected_feature = st.selectbox("Select a feature to plot", numeric_columns)
+    st.write("### Compare Countries by Feature")
 
-  # Create scatter plot using Altair
-  chart = alt.Chart(df).mark_circle(size=60).encode(
-    x=alt.X('country:N', sort='-y'), # x-axis as categorical
-    y=alt.Y(selected_feature, title=selected_feature),
-    tooltip=['country', selected_feature]
-  ).properties(
-    width=700,
-    height=400)
+    # Let user select a numeric feature
+    numeric_columns = df.select_dtypes(include=['float', 'int64']).columns.tolist()
+    selected_feature = st.selectbox("Select a feature to compare across countries", numeric_columns)
 
-  st.altair_chart(chart, use_container_width=True)
+    # Group by country and calculate average
+    feature_by_country = df.groupby('country')[selected_feature].mean().reset_index()
+
+    # Sort by feature value descending
+    feature_by_country = feature_by_country.sort_values(by=selected_feature, ascending=False)
+
+    # Create bar chart
+    chart = alt.Chart(feature_by_country).mark_bar().encode(
+        x=alt.X(f'{selected_feature}:Q', title=f'Average {selected_feature}'),
+        y=alt.Y('country:N', sort='-x'),
+        tooltip=['country', selected_feature]
+    ).properties(
+        width=700,
+        height=500,
+        title=f'Average {selected_feature} by Country'
+    )
+
+    st.altair_chart(chart, use_container_width=True)
+
 
 # Data input
 with st.sidebar:
