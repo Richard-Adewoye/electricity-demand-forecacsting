@@ -82,27 +82,29 @@ with st.expander('World Energy Consumption Dataset'):
 
 # Data input
 with st.sidebar:
-  st.header('Please input the required features')
-  #""year, population, gdp, coal_prod_change_pct, coal_prod_change_twh, coal_prod_per_capita, coal_production, electricity_demand, electricity_generation, energy_cons_change_pct, energy_cons_change_twh, energy_per_capita, energy_per_gdp, gas_prod_change_pct, gas_prod_change_twh, gas_prod_per_capita, gas_production, hydro_electricity, hydro_share_elec, low_carbon_elec_per_capita, low_carbon_electricity, low_carbon_share_elec, nuclear_elec_per_capita, nuclear_electricity, nuclear_share_elec, oil_prod_change_pct, oil_prod_change_twh, oil_prod_per_capita, oil_production, other_renewable_electricity, other_renewables_elec_per_capita, other_renewables_share_elec, primary_energy_consumption, renewables_elec_per_capita, renewables_electricity, renewables_share_elec, solar_elec_per_capita, solar_electricity, solar_share_elec, wind_elec_per_capita, wind_electricity, wind_share_elec""
-  # To get the list of unique countries
-  countries = sorted(target_encoding_map.keys())
+    st.header('Please input the required features')
 
-  # Apply search filtering
-search_term = st.text_input("Search for a country")
-filtered_countries = [c for c in countries if search_term.lower() in c.lower()]
+    # Get sorted list of countries
+    countries = sorted(target_encoding_map.keys())
 
-# Set Nigeria as default (if present)
-if filtered_countries:
-    default_index = filtered_countries.index("Nigeria") if "Nigeria" in filtered_countries else 0
-    country = st.selectbox('Select a Country', filtered_countries, index=default_index)
-else:
-    st.warning("No Country matches your search")
-    country = None
-# Map selected country to encoded value
-country_encoded_value = mean_gdp_per_country[country]
-  
-   
-        year = st.slider('year', 2023, 2025, 2099)
+    # Search filter
+    search_term = st.text_input("Search for a country")
+    filtered_countries = [c for c in countries if search_term.lower() in c.lower()]
+
+    # Set Nigeria as default (if present)
+    if filtered_countries:
+        default_index = filtered_countries.index("Nigeria") if "Nigeria" in filtered_countries else 0
+        country = st.selectbox('Select a Country', filtered_countries, index=default_index)
+    else:
+        st.warning("No Country matches your search")
+        country = None
+
+    # Only proceed if a valid country is selected
+    if country:
+        country_encoded_value = mean_gdp_per_country[country]
+
+        # Sliders
+        year = st.slider('year', 2023, 2400, 2025)
         population = st.slider('population', 1000000000, 6000000000, 3000000000)
         gdp = st.slider('gdp', 134586329843, 912328463859, 123456789)
         coal_prod_change_pct = st.slider('coal_prod_change_pct', 37.43, 90.32, 65.43)
@@ -143,86 +145,78 @@ country_encoded_value = mean_gdp_per_country[country]
         wind_elec_per_capita = st.slider('wind_elec_per_capita', 37.43, 90.32, 65.43)
         wind_electricity = st.slider('wind_electricity', 37.43, 90.32, 65.43)
         wind_share_elec = st.slider('wind_share_elec', 37.43, 90.32, 65.43)
-        
+
         if st.button("Predict"):
-          input_dict = {
-            'country_encoded':country_encoded_value,
-            'year':year,
-            'population':population,
-            'gdp':gdp,
-            'coal_prod_change_pct':coal_prod_change_pct,
-            'coal_prod_change_twh':coal_prod_change_twh,
-            'coal_prod_per_capita':coal_prod_per_capita,
-            'coal_production':coal_production,
-            'electricity_generation':electricity_generation,
-            'energy_cons_change_pct':energy_cons_change_pct,
-            'energy_cons_change_twh':energy_cons_change_twh,
-            'energy_per_capita':energy_per_capita,
-            'energy_per_gdp':energy_per_gdp,
-            'gas_prod_change_pct':gas_prod_change_pct,
-            'gas_prod_change_twh':gas_prod_change_twh,
-            'gas_prod_per_capita':gas_prod_per_capita,
-            'gas_production':gas_production,
-            'hydro_electricity':hydro_electricity,
-            'hydro_share_elec':hydro_share_elec,
-            'low_carbon_elec_per_capita':low_carbon_elec_per_capita,
-            'low_carbon_electricity':low_carbon_electricity,
-            'low_carbon_share_elec':low_carbon_share_elec,
-            'nuclear_elec_per_capita':nuclear_elec_per_capita,
-            'nuclear_electricity':nuclear_electricity,
-            'nuclear_share_elec':nuclear_share_elec,
-            'oil_prod_change_pct':oil_prod_change_pct,
-            'oil_prod_change_twh':oil_prod_change_twh,
-            'oil_prod_per_capita':oil_prod_per_capita,
-            'oil_production':oil_production,
-            'other_renewable_electricity':other_renewable_electricity,
-            'other_renewables_elec_per_capita':other_renewables_elec_per_capita,
-            'other_renewables_share_elec':other_renewables_share_elec,
-            'primary_energy_consumption':primary_energy_consumption,
-            'renewables_elec_per_capita':renewables_elec_per_capita,
-            'renewables_electricity':renewables_electricity,
-            'renewables_share_elec':renewables_share_elec,
-            'solar_elec_per_capita':solar_elec_per_capita,
-            'solar_electricity':solar_electricity,
-            'solar_share_elec':solar_share_elec,
-            'wind_elec_per_capita':wind_elec_per_capita,
-            'wind_electricity':wind_electricity,
-            'wind_share_elec':wind_share_elec,
-          }
-        
-          # Covert to Dataframe
-          input_df = pd.DataFrame([input_dict])
-        
-          # Get expected features
-          expected_features = model.get_booster().feature_names
-        
-        
-          # Ensure all expected features are present in input_df
-          for feature in expected_features:
-            if feature not in input_df.columns:
-              input_df[feature] = 0 # or another default
-           # keep only the expected columns, in order
-          input_df = input_df[expected_features]
-        
-          # Make prediction
-          prediction = model.predict(input_df)
-        
-          st.markdown(f"""
-            <div style='
-              position: fixed;
-              bottom: 0;
-              left: 0;
-              width: 100%;
-              background-color: #d4edda;
-              color: #155724;
-              padding: 40px 20px;
-              font-size: 28px;
-              font-weight: bold;
-              text-align: center;
-              border-top: 5px solid #28a745;
-              z-index: 9999;
-              '>
-              Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
-              </div>
-              """, unsafe_allow_html=True
-                     )
+            input_dict = {
+                'country_encoded': country_encoded_value,
+                'year': year,
+                'population': population,
+                'gdp': gdp,
+                'coal_prod_change_pct': coal_prod_change_pct,
+                'coal_prod_change_twh': coal_prod_change_twh,
+                'coal_prod_per_capita': coal_prod_per_capita,
+                'coal_production': coal_production,
+                'electricity_generation': electricity_generation,
+                'energy_cons_change_pct': energy_cons_change_pct,
+                'energy_cons_change_twh': energy_cons_change_twh,
+                'energy_per_capita': energy_per_capita,
+                'energy_per_gdp': energy_per_gdp,
+                'gas_prod_change_pct': gas_prod_change_pct,
+                'gas_prod_change_twh': gas_prod_change_twh,
+                'gas_prod_per_capita': gas_prod_per_capita,
+                'gas_production': gas_production,
+                'hydro_electricity': hydro_electricity,
+                'hydro_share_elec': hydro_share_elec,
+                'low_carbon_elec_per_capita': low_carbon_elec_per_capita,
+                'low_carbon_electricity': low_carbon_electricity,
+                'low_carbon_share_elec': low_carbon_share_elec,
+                'nuclear_elec_per_capita': nuclear_elec_per_capita,
+                'nuclear_electricity': nuclear_electricity,
+                'nuclear_share_elec': nuclear_share_elec,
+                'oil_prod_change_pct': oil_prod_change_pct,
+                'oil_prod_change_twh': oil_prod_change_twh,
+                'oil_prod_per_capita': oil_prod_per_capita,
+                'oil_production': oil_production,
+                'other_renewable_electricity': other_renewable_electricity,
+                'other_renewables_elec_per_capita': other_renewables_elec_per_capita,
+                'other_renewables_share_elec': other_renewables_share_elec,
+                'primary_energy_consumption': primary_energy_consumption,
+                'renewables_elec_per_capita': renewables_elec_per_capita,
+                'renewables_electricity': renewables_electricity,
+                'renewables_share_elec': renewables_share_elec,
+                'solar_elec_per_capita': solar_elec_per_capita,
+                'solar_electricity': solar_electricity,
+                'solar_share_elec': solar_share_elec,
+                'wind_elec_per_capita': wind_elec_per_capita,
+                'wind_electricity': wind_electricity,
+                'wind_share_elec': wind_share_elec,
+            }
+
+            input_df = pd.DataFrame([input_dict])
+            expected_features = model.get_booster().feature_names
+
+            for feature in expected_features:
+                if feature not in input_df.columns:
+                    input_df[feature] = 0
+
+            input_df = input_df[expected_features]
+            prediction = model.predict(input_df)
+
+            st.markdown(f"""
+                <div style='
+                    position: fixed;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    background-color: #d4edda;
+                    color: #155724;
+                    padding: 40px 20px;
+                    font-size: 28px;
+                    font-weight: bold;
+                    text-align: center;
+                    border-top: 5px solid #28a745;
+                    z-index: 9999;
+                '>
+                    Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
+                </div>
+            """, unsafe_allow_html=True)
