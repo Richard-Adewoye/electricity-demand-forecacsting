@@ -36,7 +36,7 @@ fig.update_layout(
         projection_type='orthographic',
         showocean=True,
         oceancolor='lightblue',  # Set sea color here
-        bgcolor='black'   
+        bgcolor='black',
         showland=True,
         landcolor='#f0e6d6',          # Soft earth tone
         showlakes=True,
