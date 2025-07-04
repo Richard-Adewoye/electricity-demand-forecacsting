@@ -38,17 +38,13 @@ fig.update_layout(
         oceancolor='lightblue',  # Set sea color here
         bgcolor='black',
         showland=True,
-        landcolor='#f0e6d6',          # Soft earth tone
+        landcolor='#f0e6d6',  # Elegant earth tone
         showlakes=True,
         lakecolor='lightblue',
-        showrivers=True,
-        rivercolor='lightblue',
         showcountries=True,
         countrycolor='white',
-        showgrid=True,
-        gridcolor='gray',
         lonaxis=dict(showgrid=True, gridcolor='lightgray'),
-        lataxis=dict(showgrid=True, gridcolor='lightgray'),
+        lataxis=dict(showgrid=True, gridcolor='lightgray')
     ),
     margin=dict(l=0, r=0, t=50, b=0),
     height=700,  
