@@ -36,7 +36,7 @@ fig.update_layout(
         projection_type='orthographic',
         showocean=True,
         oceancolor='lightblue',  # Set sea color here
-        bgcolor='lightblue'      # Set overall background to match
+        bgcolor='black'      # Set overall background to match
     ),
     margin=dict(l=0, r=0, t=50, b=0),
     height=700,  
