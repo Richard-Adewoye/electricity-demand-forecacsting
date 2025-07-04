@@ -36,8 +36,8 @@ fig.update_layout(
         projection_type='natural earth'
     ),
     margin=dict(l=0, r=0, t=50, b=0),
-    height=700,  # 👈 Increase height (default is ~450)
-    width=2100   # 👈 Optional: increase width if you want
+    height=1700,  # 
+    width=2100   # 
 )
 
 st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual size
