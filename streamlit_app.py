@@ -11,29 +11,30 @@ st.info('This is a Machine Learning app that predicts based on Multiple Energy-r
 df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
 model = joblib.load('electricity_demand_xgboost_model.pkl')
 
-Global Choropleth: Average Electricity Demand
-    st.markdown("This map shows average electricity demand per country.")
+st.markdown("### Global Choropleth: Average Electricity Demand")
+st.markdown("This map shows the average electricity demand per country.")
 
-    # Compute average electricity demand per country
-    avg_demand = df.groupby('country', as_index=False)['electricity_demand'].mean()
-    avg_demand.columns = ['country', 'avg_electricity_demand']
+# Compute average electricity demand per country
+avg_demand = df.groupby('country', as_index=False)['electricity_demand'].mean()
+avg_demand.columns = ['country', 'avg_electricity_demand']
 
-    # Plot using Plotly
-    fig = px.choropleth(
-        avg_demand,
-        locations='country',
-        locationmode='country names',
-        color='avg_electricity_demand',
-        color_continuous_scale='Viridis',
-        title='Average Electricity Demand by Country',
-    )
+# Plot using Plotly
+fig = px.choropleth(
+    avg_demand,
+    locations='country',
+    locationmode='country names',
+    color='avg_electricity_demand',
+    color_continuous_scale='Viridis',
+    title='Average Electricity Demand by Country',
+)
 
-    fig.update_layout(
-        geo=dict(showframe=False, showcoastlines=False),
-        margin=dict(l=0, r=0, t=30, b=0)
-    )
+fig.update_layout(
+    geo=dict(showframe=False, showcoastlines=False),
+    margin=dict(l=0, r=0, t=30, b=0)
+)
 
-    st.plotly_chart(fig, use_container_width=True)
+# Display the map
+st.plotly_chart(fig, use_container_width=True)
 
 
 with st.expander('Data visualisation'):
