@@ -20,7 +20,6 @@ st.markdown("This map shows the average electricity demand per country.")
 avg_demand = df.groupby('country', as_index=False)['electricity_demand'].mean()
 avg_demand.columns = ['country', 'avg_electricity_demand']
 
-# Plot using Plotly
 fig = px.choropleth(
     avg_demand,
     locations='country',
@@ -31,12 +30,17 @@ fig = px.choropleth(
 )
 
 fig.update_layout(
-    geo=dict(showframe=False, showcoastlines=False),
-    margin=dict(l=0, r=0, t=30, b=0)
+    geo=dict(
+        showframe=False,
+        showcoastlines=False,
+        projection_type='natural earth'
+    ),
+    margin=dict(l=0, r=0, t=50, b=0),
+    height=700,  # 👈 Increase height (default is ~450)
+    width=1100   # 👈 Optional: increase width if you want
 )
 
-# Display the map
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual size
 
 
 with st.expander('Data visualisation'):
