@@ -13,7 +13,7 @@ st.info('This is a Machine Learning app that predicts based on Multiple Energy-r
 df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
 model = joblib.load('electricity_demand_xgboost_model.pkl')
 
-st.markdown("### Global Choropleth: Average Electricity Demand")
+st.markdown("### Map to show Average Electricity Demand")
 st.markdown("This map shows the average electricity demand per country.")
 
 # Compute average electricity demand per country
@@ -37,7 +37,7 @@ fig.update_layout(
     ),
     margin=dict(l=0, r=0, t=50, b=0),
     height=700,  # 👈 Increase height (default is ~450)
-    width=1100   # 👈 Optional: increase width if you want
+    width=2100   # 👈 Optional: increase width if you want
 )
 
 st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual size
