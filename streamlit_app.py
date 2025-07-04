@@ -25,7 +25,7 @@ fig = px.choropleth(
     locations='country',
     locationmode='country names',
     color='avg_electricity_demand',
-    color_continuous_scale='Viridis',
+    color_continuous_scale='Earth',
     title='Average Electricity Demand by Country',
 )
 
