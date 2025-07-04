@@ -35,7 +35,7 @@ fig.update_layout(
         showcoastlines=False,
         projection_type='natural earth'
     ),
-    margin=dict(l=0, r=0, t=50, b=0),
+    margin=dict(l=20, r=20, t=50, b=20),
     height=800,  # 
     width=600   # 
 )
