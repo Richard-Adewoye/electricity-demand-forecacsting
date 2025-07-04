@@ -33,7 +33,7 @@ fig.update_layout(
     geo=dict(
         showframe=False,
         showcoastlines=False,
-        projection_type='natural earth'
+        projection_type='orthographic'
     ),
     margin=dict(l=0, r=0, t=50, b=0),
     height=700,  
