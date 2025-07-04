@@ -33,7 +33,10 @@ fig.update_layout(
     geo=dict(
         showframe=False,
         showcoastlines=False,
-        projection_type='orthographic'
+        projection_type='orthographic',
+        showocean=True,
+        oceancolor='lightblue',  # Set sea color here
+        bgcolor='lightblue'      # Set overall background to match
     ),
     margin=dict(l=0, r=0, t=50, b=0),
     height=700,  
