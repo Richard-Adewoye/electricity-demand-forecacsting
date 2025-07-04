@@ -11,7 +11,7 @@ st.info('This is a Machine Learning app that predicts based on Multiple Energy-r
 df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
 model = joblib.load('electricity_demand_xgboost_model.pkl')
 
-("🌍 Global Choropleth: Average Electricity Demand"):
+🌍 Global Choropleth: Average Electricity Demand"
     st.markdown("This map shows average electricity demand per country.")
 
     # Compute average electricity demand per country
