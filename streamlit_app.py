@@ -33,11 +33,11 @@ fig.update_layout(
     geo=dict(
         showframe=False,
         showcoastlines=False,
-        projection_type='natural earth'
+        projection_type='mercator'
     ),
-    margin=dict(l=20, r=20, t=50, b=20),
-    height=800,  # 
-    width=600   # 
+    margin=dict(l=0, r=0, t=0, b=20),
+    height=500,  # 
+    width=500   # 
 )
 
 st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual size
