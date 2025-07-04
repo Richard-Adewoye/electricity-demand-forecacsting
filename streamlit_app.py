@@ -51,7 +51,7 @@ fig.update_layout(
     width=1100    
 )
 
-st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual size
+st.plotly_chart(fig, use_container_width=True)  # Set False to honor the manual size
 
 
 
