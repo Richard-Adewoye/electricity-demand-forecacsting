@@ -48,7 +48,7 @@ fig.update_layout(
     ),
     margin=dict(l=0, r=0, t=50, b=0),
     height=700,  
-    width=1100    
+    width=2100    
 )
 
 st.plotly_chart(fig, use_container_width=True)  # Set False to honor the manual size
