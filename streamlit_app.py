@@ -267,6 +267,12 @@ with st.sidebar:
                     text-align: center;
                     border-top: 5px solid #28a745;
                     z-index: 9999;
+                     <style>
+        .main .block-container {
+            padding-left: 0rem;
+            padding-right: 0rem;
+        }
+    </style>
                 '>
                     Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
                 </div>
