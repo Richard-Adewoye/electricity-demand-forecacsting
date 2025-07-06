@@ -256,22 +256,6 @@ with st.sidebar:
     if country:
         country_encoded_value = mean_gdp_per_country[country]
 
-
-
-       # Define the labeled_input function
-from streamlit import columns
-
-def labeled_input(label, component_func, *args, **kwargs):
-    col1, col2 = st.columns([0.85, 0.15])
-    with col1:
-        value = component_func(label, *args, **kwargs)
-    with col2:
-        if value:
-            st.markdown("<span style='color:green;font-size:24px;'>&#10003;</span>", unsafe_allow_html=True)
-        else:
-            st.markdown("<span style='color:gray;font-size:24px;'>&#9711;</span>", unsafe_allow_html=True)
-    return value
-
 # Sliders
 year = st.slider('year', 2023, 2400, 2025)
 population = st.slider('population', 1000000000, 6000000000, 3000000000)
