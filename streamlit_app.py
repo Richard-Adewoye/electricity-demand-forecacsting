@@ -10,36 +10,39 @@ import pycountry
 
 st.markdown("""
     <style>
-    .glow-title {
-        font-size: 48px;
-        font-weight: bold;
-        color: #ffffff;
-        text-align: left;
-        text-shadow: 
-            0 0 5px #00e6e6,
-            0 0 10px #00e6e6,
-            0 0 20px #00e6e6,
-            0 0 40px #00e6e6;
-        margin-bottom: 15px;
-    }
-    .glow-info {
-        font-size: 18px;
-        font-weight: normal;
-        color: #cceeff;
-        text-align: center;
-        background-color: rgba(0, 128, 128, 0.1);
-        padding: 12px;
-        border-left: 6px solid #00cccc;
-        border-radius: 4px;
-        box-shadow: 0 0 10px #00cccc;
-    }
+        .glow-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: left;
+            text-shadow: 
+                0 0 5px #00e6e6,
+                0 0 10px #00e6e6,
+                0 0 20px #00e6e6,
+                0 0 40px #00e6e6;
+            margin-bottom: 15px;
+        }
+
+        .glow-info {
+            font-size: 18px;
+            font-weight: normal;
+            color: #cceeff;
+            text-align: center;
+            background-color: rgba(0, 128, 128, 0.1);
+            padding: 12px;
+            border-left: 6px solid #00cccc;
+            border-radius: 4px;
+            box-shadow: 0 0 10px #00cccc;
+            margin-bottom: 25px;
+        }
     </style>
 
-    <div class='glow-title'>Electricity Demand Forecasting</div>
-    <div class='glow-info'>
+    <div class="glow-title">Electricity Demand Forecasting</div>
+    <div class="glow-info">
         This is a Machine Learning app that predicts based on Multiple Energy-related factors!
     </div>
 """, unsafe_allow_html=True)
+
 
 
 df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
