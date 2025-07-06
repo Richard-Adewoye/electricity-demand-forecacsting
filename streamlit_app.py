@@ -37,6 +37,26 @@ def load_model():
 st.markdown("### Map to show Average Electricity Demand")
 st.markdown("This map shows the average electricity demand per country.")
 
+st.markdown("""
+    <style>
+    .glow {
+        font-size: 36px;
+        font-weight: bold;
+        color: #fff;
+        text-align: center;
+        text-shadow: 
+            0 0 5px #00e6e6, 
+            0 0 10px #00e6e6, 
+            0 0 20px #00e6e6, 
+            0 0 40px #00e6e6;
+        margin-bottom: 30px;
+    }
+    </style>
+
+    <div class='glow'>Electricity Demand Forecasting</div>
+""", unsafe_allow_html=True)
+
+
 # Compute average electricity demand per country
 avg_demand = df.groupby('country', as_index=False)['electricity_demand'].mean()
 avg_demand.columns = ['country', 'avg_electricity_demand']
