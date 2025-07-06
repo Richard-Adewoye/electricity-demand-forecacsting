@@ -294,8 +294,8 @@ with st.sidebar:
         wind_electricity = st.slider('wind_electricity', 37.43, 90.32, 65.43)
         wind_share_elec = st.slider('wind_share_elec', 37.43, 90.32, 65.43)
 
+prediction = model.predict(input_df)
 
-   # 1. Inject the style block separately first
 st.markdown("""
     <style>
         .main .block-container {
@@ -305,7 +305,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 2. Then add your styled result bar
 st.markdown(f"""
     <div style='
         position: fixed;
