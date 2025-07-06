@@ -33,7 +33,7 @@ st.markdown("""
             border-left: 6px solid #00cccc;
             border-radius: 4px;
             box-shadow: 0 0 10px #00cccc;
-            margin-bottom: 25px;
+            margin-bottom: 80px; /* Increased spacing below header */
         }
     </style>
 
@@ -42,6 +42,7 @@ st.markdown("""
         This is a Machine Learning app that predicts based on Multiple Energy-related factors!
     </div>
 """, unsafe_allow_html=True)
+
 
 
 
