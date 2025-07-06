@@ -71,33 +71,33 @@ with st.expander('Data visualisation'):
     # Sort by feature value descending
     feature_by_country = feature_by_country.sort_values(by=selected_feature, ascending=False).head(20)
 
-# Create bar chart
-fig = go.Figure()
-
-fig.add_trace(go.Bar(
-    x=feature_by_country[selected_feature],
-    y=feature_by_country['country'],
-    orientation='h',
-    marker=dict(
-        color=feature_by_country[selected_feature],
-        colorscale='Viridis',  # Try 'Cividis', 'Blues', etc.
-        line=dict(width=1.5, color='gray')  # Border simulates 3D
-    ),
-    opacity=0.9,
-    hoverinfo='x+y'
-))
-
-fig.update_layout(
-    title=f'Average {selected_feature} by Country',
-    xaxis_title=f'Average {selected_feature}',
-    yaxis=dict(autorange="reversed"),  # So top values are at the top
-    margin=dict(l=0, r=0, t=50, b=0),
-    height=600,
-    plot_bgcolor='rgba(0,0,0,0)',
-    paper_bgcolor='white'  # Or set to black for dark mode
-)
-
-st.plotly_chart(fig, use_container_width=True)
+    # Create bar chart
+    fig = go.Figure()
+    
+    fig.add_trace(go.Bar(
+        x=feature_by_country[selected_feature],
+        y=feature_by_country['country'],
+        orientation='h',
+        marker=dict(
+            color=feature_by_country[selected_feature],
+            colorscale='Viridis',  # Try 'Cividis', 'Blues', etc.
+            line=dict(width=1.5, color='gray')  # Border simulates 3D
+        ),
+        opacity=0.9,
+        hoverinfo='x+y'
+    ))
+    
+    fig.update_layout(
+        title=f'Average {selected_feature} by Country',
+        xaxis_title=f'Average {selected_feature}',
+        yaxis=dict(autorange="reversed"),  # So top values are at the top
+        margin=dict(l=0, r=0, t=50, b=0),
+        height=600,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='white'  # Or set to black for dark mode
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
     
 with st.expander("Pie Chart: Country Share of Selected Feature"):
     st.write("### Pie Chart Based on Aggregated Values")
@@ -115,22 +115,22 @@ with st.expander("Pie Chart: Country Share of Selected Feature"):
 
     # Create pie chart using Altair
     
-# Make sure you have `agg_data` ready with `country` and the selected feature
-fig = go.Figure(data=[go.Pie(
-    labels=agg_data['country'],
-    values=agg_data[selected_feature],
-    hole=0.3,  # Optional: makes it look like a donut (more 3D-like)
-    pull=[0.05]*len(agg_data),  # Slightly pull all slices
-    textinfo='label+percent',
-    marker=dict(line=dict(color='white', width=2))
-)])
-
-fig.update_layout(
-    title=f"Top 10 Countries by Average {selected_feature}",
-    margin=dict(l=0, r=0, t=50, b=0)
-)
-
-st.plotly_chart(fig, use_container_width=True)
+    # Make sure you have `agg_data` ready with `country` and the selected feature
+    fig = go.Figure(data=[go.Pie(
+        labels=agg_data['country'],
+        values=agg_data[selected_feature],
+        hole=0.3,  # Optional: makes it look like a donut (more 3D-like)
+        pull=[0.05]*len(agg_data),  # Slightly pull all slices
+        textinfo='label+percent',
+        marker=dict(line=dict(color='white', width=2))
+    )])
+    
+    fig.update_layout(
+        title=f"Top 10 Countries by Average {selected_feature}",
+        margin=dict(l=0, r=0, t=50, b=0)
+    )
+    
+    st.plotly_chart(fig, use_container_width=True)
 
 
 with st.expander('World Energy Consumption Dataset'):
