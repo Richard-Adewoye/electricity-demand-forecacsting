@@ -25,7 +25,7 @@ avg_demand = df.groupby('country', as_index=False)['electricity_demand'].mean()
 avg_demand.columns = ['country', 'avg_electricity_demand']
 
 fig = px.choropleth(
-    avg_demand,
+    df.groupby('country', as_index=False)['electricity_demand'].mean().rename(columns={'electricity_demand': 'avg_electricity_demand'}),
     locations='country',
     locationmode='country names',
     color='avg_electricity_demand',
