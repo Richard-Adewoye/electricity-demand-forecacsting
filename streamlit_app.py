@@ -4,6 +4,7 @@ import numpy as np
 import altair as alt
 import joblib
 import plotly.express as px
+import plotly.graph_objects as go
 
 
 st.title('Electricity Demand Forecasting')
@@ -98,15 +99,23 @@ with st.expander("Pie Chart: Country Share of Selected Feature"):
     agg_data = agg_data.sort_values(by=selected_feature, ascending=False).head(10)
 
     # Create pie chart using Altair
-    pie_chart = alt.Chart(agg_data).mark_arc().encode(
-        theta=alt.Theta(field=selected_feature, type="quantitative"),
-        color=alt.Color(field="country", type="nominal"),
-        tooltip=["country", selected_feature]
-    ).properties(
-        title=f"Top 10 Countries by Average {selected_feature}"
-    )
+    
+# Make sure you have `agg_data` ready with `country` and the selected feature
+fig = go.Figure(data=[go.Pie(
+    labels=agg_data['country'],
+    values=agg_data[selected_feature],
+    hole=0.3,  # Optional: makes it look like a donut (more 3D-like)
+    pull=[0.05]*len(agg_data),  # Slightly pull all slices
+    textinfo='label+percent',
+    marker=dict(line=dict(color='white', width=2))
+)])
 
-    st.altair_chart(pie_chart, use_container_width=True)
+fig.update_layout(
+    title=f"Top 10 Countries by Average {selected_feature}",
+    margin=dict(l=0, r=0, t=50, b=0)
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
 
 with st.expander('World Energy Consumption Dataset'):
