@@ -43,6 +43,36 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+    <style>
+    .input-indicator {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .circle {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: lightgray;
+        border: 2px solid gray;
+    }
+    .circle.complete {
+        background-color: #28a745;
+        border: 2px solid #28a745;
+        position: relative;
+    }
+    .circle.complete::after {
+        content: '\\2713'; /* Unicode checkmark */
+        color: white;
+        font-size: 12px;
+        position: absolute;
+        top: -2px;
+        left: 3px;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 
 
@@ -203,10 +233,6 @@ with st.expander('World Energy Consumption Dataset'):
   st.write(y)
 
 
-
-
-
-
 # Data input
 with st.sidebar:
     st.header('Please input the required features')
@@ -232,48 +258,62 @@ with st.sidebar:
 
 
 
-        # Sliders
-        year = st.slider('year', 2023, 2400, 2025)
-        population = st.slider('population', 1000000000, 6000000000, 3000000000)
-        gdp = st.slider('gdp', 134586329843, 912328463859, 123456789)
-        coal_prod_change_pct = st.slider('coal_prod_change_pct', 37.43, 90.32, 65.43)
-        coal_prod_change_twh = st.slider('coal_prod_change_twh', 37.43, 90.32, 65.43)
-        coal_prod_per_capita = st.slider('coal_prod_per_capita', 37.43, 90.32, 65.43)
-        coal_production = st.slider('coal_production', 37.43, 90.32, 65.43)
-        electricity_generation = st.slider('electricity_generation', 37.43, 90.32, 65.43)
-        energy_cons_change_pct = st.slider('energy_cons_change_pct', 37.43, 90.32, 65.43)
-        energy_cons_change_twh = st.slider('energy_cons_change_twh', 37.43, 90.32, 65.43)
-        energy_per_capita = st.slider('energy_per_capita', 37.43, 90.32, 65.43)
-        energy_per_gdp = st.slider('energy_per_gdp', 37.43, 90.32, 65.43)
-        gas_prod_change_pct = st.slider('gas_prod_change_pct', 37.43, 90.32, 65.43)
-        gas_prod_change_twh = st.slider('gas_prod_change_twh', 37.43, 90.32, 65.43)
-        gas_prod_per_capita = st.slider('gas_prod_per_capita', 37.43, 90.32, 65.43)
-        gas_production = st.slider('gas_production', 37.43, 90.32, 65.43)
-        hydro_electricity = st.slider('hydro_electricity', 37.43, 90.32, 65.43)
-        hydro_share_elec = st.slider('hydro_share_elec', 37.43, 90.32, 65.43)
-        low_carbon_elec_per_capita = st.slider('low_carbon_elec_per_capita', 37.43, 90.32, 65.43)
-        low_carbon_electricity = st.slider('low_carbon_electricity', 37.43, 90.32, 65.43)
-        low_carbon_share_elec = st.slider('low_carbon_share_elec', 37.43, 90.32, 65.43)
-        nuclear_elec_per_capita = st.slider('nuclear_elec_per_capita', 37.43, 90.32, 65.43)
-        nuclear_electricity = st.slider('nuclear_electricity', 37.43, 90.32, 65.43)
-        nuclear_share_elec = st.slider('nuclear_share_elec', 37.43, 90.32, 65.43)
-        oil_prod_change_pct = st.slider('oil_prod_change_pct', 37.43, 90.32, 65.43)
-        oil_prod_change_twh = st.slider('oil_prod_change_twh', 37.43, 90.32, 65.43)
-        oil_prod_per_capita = st.slider('oil_prod_per_capita', 37.43, 90.32, 65.43)
-        oil_production = st.slider('oil_production', 37.43, 90.32, 65.43)
-        other_renewable_electricity = st.slider('other_renewable_electricity', 37.43, 90.32, 65.43)
-        other_renewables_elec_per_capita = st.slider('other_renewables_elec_per_capita', 37.43, 90.32, 65.43)
-        other_renewables_share_elec = st.slider('other_renewables_share_elec', 37.43, 90.32, 65.43)
-        primary_energy_consumption = st.slider('primary_energy_consumption', 37.43, 90.32, 65.43)
-        renewables_elec_per_capita = st.slider('renewables_elec_per_capita', 37.43, 90.32, 65.43)
-        renewables_electricity = st.slider('renewables_electricity', 37.43, 90.32, 65.43)
-        renewables_share_elec = st.slider('renewables_share_elec', 37.43, 90.32, 65.43)
-        solar_elec_per_capita = st.slider('solar_elec_per_capita', 37.43, 90.32, 65.43)
-        solar_electricity = st.slider('solar_electricity', 37.43, 90.32, 65.43)
-        solar_share_elec = st.slider('solar_share_elec', 37.43, 90.32, 65.43)
-        wind_elec_per_capita = st.slider('wind_elec_per_capita', 37.43, 90.32, 65.43)
-        wind_electricity = st.slider('wind_electricity', 37.43, 90.32, 65.43)
-        wind_share_elec = st.slider('wind_share_elec', 37.43, 90.32, 65.43)
+       # Define the labeled_input function
+from streamlit import columns
+
+def labeled_input(label, component_func, *args, **kwargs):
+    col1, col2 = st.columns([0.85, 0.15])
+    with col1:
+        value = component_func(label, *args, **kwargs)
+    with col2:
+        if value:
+            st.markdown("<span style='color:green;font-size:24px;'>&#10003;</span>", unsafe_allow_html=True)
+        else:
+            st.markdown("<span style='color:gray;font-size:24px;'>&#9711;</span>", unsafe_allow_html=True)
+    return value
+
+# Sliders with tick indicators
+year = labeled_input('year', st.slider, 2023, 2400, 2025)
+population = labeled_input('population', st.slider, 1000000000, 6000000000, 3000000000)
+gdp = labeled_input('gdp', st.slider, 134586329843, 912328463859, 123456789)
+coal_prod_change_pct = labeled_input('coal_prod_change_pct', st.slider, 37.43, 90.32, 65.43)
+coal_prod_change_twh = labeled_input('coal_prod_change_twh', st.slider, 37.43, 90.32, 65.43)
+coal_prod_per_capita = labeled_input('coal_prod_per_capita', st.slider, 37.43, 90.32, 65.43)
+coal_production = labeled_input('coal_production', st.slider, 37.43, 90.32, 65.43)
+electricity_generation = labeled_input('electricity_generation', st.slider, 37.43, 90.32, 65.43)
+energy_cons_change_pct = labeled_input('energy_cons_change_pct', st.slider, 37.43, 90.32, 65.43)
+energy_cons_change_twh = labeled_input('energy_cons_change_twh', st.slider, 37.43, 90.32, 65.43)
+energy_per_capita = labeled_input('energy_per_capita', st.slider, 37.43, 90.32, 65.43)
+energy_per_gdp = labeled_input('energy_per_gdp', st.slider, 37.43, 90.32, 65.43)
+gas_prod_change_pct = labeled_input('gas_prod_change_pct', st.slider, 37.43, 90.32, 65.43)
+gas_prod_change_twh = labeled_input('gas_prod_change_twh', st.slider, 37.43, 90.32, 65.43)
+gas_prod_per_capita = labeled_input('gas_prod_per_capita', st.slider, 37.43, 90.32, 65.43)
+gas_production = labeled_input('gas_production', st.slider, 37.43, 90.32, 65.43)
+hydro_electricity = labeled_input('hydro_electricity', st.slider, 37.43, 90.32, 65.43)
+hydro_share_elec = labeled_input('hydro_share_elec', st.slider, 37.43, 90.32, 65.43)
+low_carbon_elec_per_capita = labeled_input('low_carbon_elec_per_capita', st.slider, 37.43, 90.32, 65.43)
+low_carbon_electricity = labeled_input('low_carbon_electricity', st.slider, 37.43, 90.32, 65.43)
+low_carbon_share_elec = labeled_input('low_carbon_share_elec', st.slider, 37.43, 90.32, 65.43)
+nuclear_elec_per_capita = labeled_input('nuclear_elec_per_capita', st.slider, 37.43, 90.32, 65.43)
+nuclear_electricity = labeled_input('nuclear_electricity', st.slider, 37.43, 90.32, 65.43)
+nuclear_share_elec = labeled_input('nuclear_share_elec', st.slider, 37.43, 90.32, 65.43)
+oil_prod_change_pct = labeled_input('oil_prod_change_pct', st.slider, 37.43, 90.32, 65.43)
+oil_prod_change_twh = labeled_input('oil_prod_change_twh', st.slider, 37.43, 90.32, 65.43)
+oil_prod_per_capita = labeled_input('oil_prod_per_capita', st.slider, 37.43, 90.32, 65.43)
+oil_production = labeled_input('oil_production', st.slider, 37.43, 90.32, 65.43)
+other_renewable_electricity = labeled_input('other_renewable_electricity', st.slider, 37.43, 90.32, 65.43)
+other_renewables_elec_per_capita = labeled_input('other_renewables_elec_per_capita', st.slider, 37.43, 90.32, 65.43)
+other_renewables_share_elec = labeled_input('other_renewables_share_elec', st.slider, 37.43, 90.32, 65.43)
+primary_energy_consumption = labeled_input('primary_energy_consumption', st.slider, 37.43, 90.32, 65.43)
+renewables_elec_per_capita = labeled_input('renewables_elec_per_capita', st.slider, 37.43, 90.32, 65.43)
+renewables_electricity = labeled_input('renewables_electricity', st.slider, 37.43, 90.32, 65.43)
+renewables_share_elec = labeled_input('renewables_share_elec', st.slider, 37.43, 90.32, 65.43)
+solar_elec_per_capita = labeled_input('solar_elec_per_capita', st.slider, 37.43, 90.32, 65.43)
+solar_electricity = labeled_input('solar_electricity', st.slider, 37.43, 90.32, 65.43)
+solar_share_elec = labeled_input('solar_share_elec', st.slider, 37.43, 90.32, 65.43)
+wind_elec_per_capita = labeled_input('wind_elec_per_capita', st.slider, 37.43, 90.32, 65.43)
+wind_electricity = labeled_input('wind_electricity', st.slider, 37.43, 90.32, 65.43)
+wind_share_elec = labeled_input('wind_share_elec', st.slider, 37.43, 90.32, 65.43)
 
         if st.button("Predict"):
             input_dict = {
