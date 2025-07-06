@@ -66,24 +66,7 @@ def load_data():
 def load_model():
     return joblib.load('electricity_demand_xgboost_model.pkl')
 
-st.markdown("""
-    <style>
-    .glow {
-        font-size: 36px;
-        font-weight: bold;
-        color: #fff;
-        text-align: center;
-        text-shadow: 
-            0 0 5px #00e6e6, 
-            0 0 10px #00e6e6, 
-            0 0 20px #00e6e6, 
-            0 0 40px #00e6e6;
-        margin-bottom: 30px;
-    }
-    </style>
-
-    <div class='glow'>Map to show Average Electricity Demand</div>
-""", unsafe_allow_html=True)
+st.info('Map to show Average Electricity Demand')
 
 
 # Compute average electricity demand per country
