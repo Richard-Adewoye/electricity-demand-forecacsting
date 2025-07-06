@@ -236,7 +236,6 @@ with st.expander('World Energy Consumption Dataset'):
 with st.sidebar:
     st.header('Please input the required features')
 
-    # Country selection logic
     countries = sorted(target_encoding_map.keys())
     search_term = st.text_input("Search for a country")
     filtered_countries = [c for c in countries if search_term.lower() in c.lower()]
@@ -251,7 +250,7 @@ with st.sidebar:
     if country:
         country_encoded_value = mean_gdp_per_country[country]
 
-        # SLIDERS (must be inside sidebar block)
+        # All slider inputs
         year = st.slider('year', 2023, 2400, 2025)
         population = st.slider('population', 1000000000, 6000000000, 3000000000)
         gdp = st.slider('gdp', 134586329843, 912328463859, 123456789)
@@ -294,7 +293,7 @@ with st.sidebar:
         wind_electricity = st.slider('wind_electricity', 37.43, 90.32, 65.43)
         wind_share_elec = st.slider('wind_share_elec', 37.43, 90.32, 65.43)
 
-if st.button("Predict"):
+        if st.button("Predict"):
             input_dict = {
                 'country_encoded': country_encoded_value,
                 'year': year,
@@ -343,7 +342,6 @@ if st.button("Predict"):
             input_df = pd.DataFrame([input_dict])
             expected_features = model.get_booster().feature_names
 
-            # Ensure correct order and fill missing
             for feature in expected_features:
                 if feature not in input_df.columns:
                     input_df[feature] = 0
@@ -351,38 +349,32 @@ if st.button("Predict"):
 
             prediction = model.predict(input_df)
 
-prediction = model.predict(input_df)
+            # Styling fix
+            st.markdown("""
+                <style>
+                    .main .block-container {
+                        padding-left: 0rem;
+                        padding-right: 0rem;
+                    }
+                </style>
+            """, unsafe_allow_html=True)
 
-st.markdown("""
-    <style>
-        .main .block-container {
-            padding-left: 0rem;
-            padding-right: 0rem;
-        }
-    </style>
-""", unsafe_allow_html=True)
+            st.markdown(f"""
+                <div style='
+                    position: fixed;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    background-color: #d4edda;
+                    color: #155724;
+                    padding: 40px 20px;
+                    font-size: 28px;
+                    font-weight: bold;
+                    text-align: center;
+                    border-top: 5px solid #28a745;
+                    z-index: 9999;
+                '>
+                    Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
+                </div>
+            """, unsafe_allow_html=True)
 
-st.markdown(f"""
-    <div style='
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: #d4edda;
-        color: #155724;
-        padding: 40px 20px;
-        font-size: 28px;
-        font-weight: bold;
-        text-align: center;
-        border-top: 5px solid #28a745;
-        z-index: 9999;
-         <style>
-.main .block-container {
-    padding-left: 0rem;
-    padding-right: 0rem;
-}
-</style>
-    '>
-        Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
-    </div>
-""", unsafe_allow_html=True)
