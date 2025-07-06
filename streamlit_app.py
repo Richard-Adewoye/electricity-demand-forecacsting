@@ -5,6 +5,7 @@ import altair as alt
 import joblib
 import plotly.express as px
 import plotly.graph_objects as go
+import pycountry
 
 
 st.title('Electricity Demand Forecasting')
