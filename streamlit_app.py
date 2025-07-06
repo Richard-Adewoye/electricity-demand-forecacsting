@@ -8,9 +8,39 @@ import plotly.graph_objects as go
 import pycountry
 
 
-st.title('Electricity Demand Forecasting')
+st.markdown("""
+    <style>
+    .glow-title {
+        font-size: 48px;
+        font-weight: bold;
+        color: #ffffff;
+        text-align: center;
+        text-shadow: 
+            0 0 5px #00e6e6,
+            0 0 10px #00e6e6,
+            0 0 20px #00e6e6,
+            0 0 40px #00e6e6;
+        margin-bottom: 15px;
+    }
+    .glow-info {
+        font-size: 18px;
+        font-weight: normal;
+        color: #cceeff;
+        text-align: center;
+        background-color: rgba(0, 128, 128, 0.1);
+        padding: 12px;
+        border-left: 6px solid #00cccc;
+        border-radius: 4px;
+        box-shadow: 0 0 10px #00cccc;
+    }
+    </style>
 
-st.info('This is a Machine Learning app that predicts based on Multiple Energy-related factors!')
+    <div class='glow-title'>Electricity Demand Forecasting</div>
+    <div class='glow-info'>
+        This is a Machine Learning app that predicts based on Multiple Energy-related factors!
+    </div>
+""", unsafe_allow_html=True)
+
 
 df = pd.read_csv('https://raw.githubusercontent.com/Richard-Adewoye/electricity-demand-forecacsting/refs/heads/master/df_cleaned.csv')
 countries_to_drop = ['ASEAN (Ember)', 'Africa', 'Africa (EI)', 'Africa (Ember)', 'Africa (Shift)', 'Asia', 'Asia & Oceania (EIA)', 'Asia (Ember)', 'Asia Pacific (EI)', 'Asia and Oceania (Shift)', 'Australia and New Zealand (EIA)', 'CIS (EI)', 'Central & South America (EIA)', 'Central America (EI)', 'Central and South America (Shift)', 'EU28 (Shift)', 'Eastern Africa (EI)', 'Eurasia (EIA)', 'Eurasia (Shift)', 'Europe', 'Europe (EI)', 'Europe (Ember)', 'Europe (Shift)', 'European Union (27)', 'French Polynesia', 'G20 (Ember)', 'G7 (Ember)', 'High-income countries', 'IEO - Africa (EIA)', 'IEO - Middle East (EIA)','Middle East (Ember)','North America (Ember)', 'IEO OECD - Europe (EIA)', 'Low-income countries', 'Lower-middle-income countries', 'Mexico, Chile, and other OECD Americas (EIA)', 'Middle Africa (EI)', 'Middle East (EI)', 'Non-OECD (EI)', 'Non-OECD (EI)', 'Non-OPEC (EI)', 'OECD (EI)', 'OECD (EIA)', 'OECD (Ember)', 'OECD (Shift)', 'OECD - Asia And Oceania (EIA)', 'OECD - Europe (EIA)', 'OECD - North America (EIA)', 'OPEC (EI)', 'OPEC (EIA)', 'OPEC (Shift)', 'OPEC - Africa (EIA)', 'OPEC - South America (EIA)', 'Oceania', 'Oceania (Ember)', 'Other Non-OECD - America (EIA)', 'Persian Gulf (EIA)', 'Reunion', 'South and Central America (EI)', 'U.S. Territories (EIA)', 'Upper-middle-income countries', 'Western Africa (EI)', 'Western Sahara', 'World']
