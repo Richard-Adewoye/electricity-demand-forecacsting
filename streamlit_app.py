@@ -256,6 +256,7 @@ with st.sidebar:
     if country:
         country_encoded_value = mean_gdp_per_country[country]
 
+
 # Sliders
 year = st.slider('year', 2023, 2400, 2025)
 population = st.slider('population', 1000000000, 6000000000, 3000000000)
