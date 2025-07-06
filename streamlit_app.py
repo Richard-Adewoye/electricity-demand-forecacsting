@@ -295,27 +295,32 @@ with st.sidebar:
         wind_share_elec = st.slider('wind_share_elec', 37.43, 90.32, 65.43)
 
 
-    st.markdown(f"""
-        <div style='
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #d4edda;
-            color: #155724;
-            padding: 40px 20px;
-            font-size: 28px;
-            font-weight: bold;
-            text-align: center;
-            border-top: 5px solid #28a745;
-            z-index: 9999;
-             <style>
-.main .block-container {
-    padding-left: 0rem;
-    padding-right: 0rem;
-}
-</style>
-        '>
-            Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
-        </div>
-    """, unsafe_allow_html=True)
+   # 1. Inject the style block separately first
+st.markdown("""
+    <style>
+        .main .block-container {
+            padding-left: 0rem;
+            padding-right: 0rem;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# 2. Then add your styled result bar
+st.markdown(f"""
+    <div style='
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #d4edda;
+        color: #155724;
+        padding: 40px 20px;
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        border-top: 5px solid #28a745;
+        z-index: 9999;
+    '>
+        Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
+    </div>
+""", unsafe_allow_html=True)
