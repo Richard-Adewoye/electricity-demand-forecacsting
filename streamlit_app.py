@@ -33,7 +33,7 @@ st.markdown("""
             border-left: 6px solid #00cccc;
             border-radius: 4px;
             box-shadow: 0 0 10px #00cccc;
-            margin-bottom: 80px; /* Increased spacing below header */
+            margin-bottom: 135px; /* Increased spacing below header */
         }
     </style>
 
@@ -108,7 +108,7 @@ st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual
 
 
 
-with st.expander('Bar chart'):
+with st.expander('Bar Chart'):
     st.write("### Compare Countries by Feature")
 
     # Let user select a numeric feature
