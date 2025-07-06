@@ -71,18 +71,33 @@ with st.expander('Data visualisation'):
     # Sort by feature value descending
     feature_by_country = feature_by_country.sort_values(by=selected_feature, ascending=False).head(20)
 
-    # Create bar chart
-    chart = alt.Chart(feature_by_country).mark_bar().encode(
-        x=alt.X(f'{selected_feature}:Q', title=f'Average {selected_feature}'),
-        y=alt.Y('country:N', sort='-x'),
-        tooltip=['country', selected_feature]
-    ).properties(
-        width=700,
-        height=500,
-        title=f'Average {selected_feature} by Country'
-    )
+# Create bar chart
+fig = go.Figure()
 
-    st.altair_chart(chart, use_container_width=True)
+fig.add_trace(go.Bar(
+    x=feature_by_country[selected_feature],
+    y=feature_by_country['country'],
+    orientation='h',
+    marker=dict(
+        color=feature_by_country[selected_feature],
+        colorscale='Viridis',  # Try 'Cividis', 'Blues', etc.
+        line=dict(width=1.5, color='gray')  # Border simulates 3D
+    ),
+    opacity=0.9,
+    hoverinfo='x+y'
+))
+
+fig.update_layout(
+    title=f'Average {selected_feature} by Country',
+    xaxis_title=f'Average {selected_feature}',
+    yaxis=dict(autorange="reversed"),  # So top values are at the top
+    margin=dict(l=0, r=0, t=50, b=0),
+    height=600,
+    plot_bgcolor='rgba(0,0,0,0)',
+    paper_bgcolor='white'  # Or set to black for dark mode
+)
+
+st.plotly_chart(fig, use_container_width=True)
     
 with st.expander("Pie Chart: Country Share of Selected Feature"):
     st.write("### Pie Chart Based on Aggregated Values")
