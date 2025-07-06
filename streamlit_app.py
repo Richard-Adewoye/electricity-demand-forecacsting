@@ -93,8 +93,7 @@ fig = px.choropleth(
     locationmode='country names',
     color='avg_electricity_demand',
     color_continuous_scale='Earth',
-    title='Average Electricity Demand by Country',
-)
+    )
 
 fig.update_layout(
     geo=dict(
