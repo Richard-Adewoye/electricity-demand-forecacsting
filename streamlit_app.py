@@ -33,10 +33,6 @@ def load_data():
 def load_model():
     return joblib.load('electricity_demand_xgboost_model.pkl')
 
-
-st.markdown("### Map to show Average Electricity Demand")
-st.markdown("This map shows the average electricity demand per country.")
-
 st.markdown("""
     <style>
     .glow {
@@ -53,7 +49,7 @@ st.markdown("""
     }
     </style>
 
-    <div class='glow'>###Map to show Average Electricity Demand</div>
+    <div class='glow'>Map to show Average Electricity Demand</div>
 """, unsafe_allow_html=True)
 
 
