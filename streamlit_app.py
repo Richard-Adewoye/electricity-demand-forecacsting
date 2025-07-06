@@ -112,7 +112,7 @@ with st.expander('Data visualisation'):
         margin=dict(l=0, r=0, t=50, b=0),
         height=600,
         plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='white'  # Or set to black for dark mode
+        paper_bgcolor='black'  # Or set to black for dark mode
     )
     
     st.plotly_chart(fig, use_container_width=True)
