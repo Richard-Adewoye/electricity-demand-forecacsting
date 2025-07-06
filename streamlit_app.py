@@ -122,7 +122,7 @@ st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual
 
 
 
-with st.expander('Data visualisation'):
+with st.expander('Bar chart'):
     st.write("### Compare Countries by Feature")
 
     # Let user select a numeric feature
