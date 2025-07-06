@@ -315,83 +315,83 @@ wind_elec_per_capita = labeled_input('wind_elec_per_capita', st.slider, 37.43, 9
 wind_electricity = labeled_input('wind_electricity', st.slider, 37.43, 90.32, 65.43)
 wind_share_elec = labeled_input('wind_share_elec', st.slider, 37.43, 90.32, 65.43)
 
-        if st.button("Predict"):
-            input_dict = {
-                'country_encoded': country_encoded_value,
-                'year': year,
-                'population': population,
-                'gdp': gdp,
-                'coal_prod_change_pct': coal_prod_change_pct,
-                'coal_prod_change_twh': coal_prod_change_twh,
-                'coal_prod_per_capita': coal_prod_per_capita,
-                'coal_production': coal_production,
-                'electricity_generation': electricity_generation,
-                'energy_cons_change_pct': energy_cons_change_pct,
-                'energy_cons_change_twh': energy_cons_change_twh,
-                'energy_per_capita': energy_per_capita,
-                'energy_per_gdp': energy_per_gdp,
-                'gas_prod_change_pct': gas_prod_change_pct,
-                'gas_prod_change_twh': gas_prod_change_twh,
-                'gas_prod_per_capita': gas_prod_per_capita,
-                'gas_production': gas_production,
-                'hydro_electricity': hydro_electricity,
-                'hydro_share_elec': hydro_share_elec,
-                'low_carbon_elec_per_capita': low_carbon_elec_per_capita,
-                'low_carbon_electricity': low_carbon_electricity,
-                'low_carbon_share_elec': low_carbon_share_elec,
-                'nuclear_elec_per_capita': nuclear_elec_per_capita,
-                'nuclear_electricity': nuclear_electricity,
-                'nuclear_share_elec': nuclear_share_elec,
-                'oil_prod_change_pct': oil_prod_change_pct,
-                'oil_prod_change_twh': oil_prod_change_twh,
-                'oil_prod_per_capita': oil_prod_per_capita,
-                'oil_production': oil_production,
-                'other_renewable_electricity': other_renewable_electricity,
-                'other_renewables_elec_per_capita': other_renewables_elec_per_capita,
-                'other_renewables_share_elec': other_renewables_share_elec,
-                'primary_energy_consumption': primary_energy_consumption,
-                'renewables_elec_per_capita': renewables_elec_per_capita,
-                'renewables_electricity': renewables_electricity,
-                'renewables_share_elec': renewables_share_elec,
-                'solar_elec_per_capita': solar_elec_per_capita,
-                'solar_electricity': solar_electricity,
-                'solar_share_elec': solar_share_elec,
-                'wind_elec_per_capita': wind_elec_per_capita,
-                'wind_electricity': wind_electricity,
-                'wind_share_elec': wind_share_elec,
-            }
+if st.button("Predict"):
+    input_dict = {
+        'country_encoded': country_encoded_value,
+        'year': year,
+        'population': population,
+        'gdp': gdp,
+        'coal_prod_change_pct': coal_prod_change_pct,
+        'coal_prod_change_twh': coal_prod_change_twh,
+        'coal_prod_per_capita': coal_prod_per_capita,
+        'coal_production': coal_production,
+        'electricity_generation': electricity_generation,
+        'energy_cons_change_pct': energy_cons_change_pct,
+        'energy_cons_change_twh': energy_cons_change_twh,
+        'energy_per_capita': energy_per_capita,
+        'energy_per_gdp': energy_per_gdp,
+        'gas_prod_change_pct': gas_prod_change_pct,
+        'gas_prod_change_twh': gas_prod_change_twh,
+        'gas_prod_per_capita': gas_prod_per_capita,
+        'gas_production': gas_production,
+        'hydro_electricity': hydro_electricity,
+        'hydro_share_elec': hydro_share_elec,
+        'low_carbon_elec_per_capita': low_carbon_elec_per_capita,
+        'low_carbon_electricity': low_carbon_electricity,
+        'low_carbon_share_elec': low_carbon_share_elec,
+        'nuclear_elec_per_capita': nuclear_elec_per_capita,
+        'nuclear_electricity': nuclear_electricity,
+        'nuclear_share_elec': nuclear_share_elec,
+        'oil_prod_change_pct': oil_prod_change_pct,
+        'oil_prod_change_twh': oil_prod_change_twh,
+        'oil_prod_per_capita': oil_prod_per_capita,
+        'oil_production': oil_production,
+        'other_renewable_electricity': other_renewable_electricity,
+        'other_renewables_elec_per_capita': other_renewables_elec_per_capita,
+        'other_renewables_share_elec': other_renewables_share_elec,
+        'primary_energy_consumption': primary_energy_consumption,
+        'renewables_elec_per_capita': renewables_elec_per_capita,
+        'renewables_electricity': renewables_electricity,
+        'renewables_share_elec': renewables_share_elec,
+        'solar_elec_per_capita': solar_elec_per_capita,
+        'solar_electricity': solar_electricity,
+        'solar_share_elec': solar_share_elec,
+        'wind_elec_per_capita': wind_elec_per_capita,
+        'wind_electricity': wind_electricity,
+        'wind_share_elec': wind_share_elec,
+    }
 
-            input_df = pd.DataFrame([input_dict])
-            expected_features = model.get_booster().feature_names
+    input_df = pd.DataFrame([input_dict])
+    expected_features = model.get_booster().feature_names
 
-            for feature in expected_features:
-                if feature not in input_df.columns:
-                    input_df[feature] = 0
+    for feature in expected_features:
+        if feature not in input_df.columns:
+            input_df[feature] = 0
 
-            input_df = input_df[expected_features]
-            prediction = model.predict(input_df)
+    input_df = input_df[expected_features]
+    prediction = model.predict(input_df)
 
-            st.markdown(f"""
-                <div style='
-                    position: fixed;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    background-color: #d4edda;
-                    color: #155724;
-                    padding: 40px 20px;
-                    font-size: 28px;
-                    font-weight: bold;
-                    text-align: center;
-                    border-top: 5px solid #28a745;
-                    z-index: 9999;
-                     <style>
-        .main .block-container {
-            padding-left: 0rem;
-            padding-right: 0rem;
-        }
-    </style>
-                '>
-                    Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
-                </div>
-            """, unsafe_allow_html=True)
+    st.markdown(f"""
+        <div style='
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 40px 20px;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            border-top: 5px solid #28a745;
+            z-index: 9999;
+             <style>
+.main .block-container {
+    padding-left: 0rem;
+    padding-right: 0rem;
+}
+</style>
+        '>
+            Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
+        </div>
+    """, unsafe_allow_html=True)
