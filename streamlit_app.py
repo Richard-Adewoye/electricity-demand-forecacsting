@@ -14,7 +14,7 @@ st.markdown("""
         font-size: 48px;
         font-weight: bold;
         color: #ffffff;
-        text-align: center;
+        text-align: left;
         text-shadow: 
             0 0 5px #00e6e6,
             0 0 10px #00e6e6,
