@@ -37,7 +37,7 @@ def load_model():
 st.markdown("### Map to show Average Electricity Demand")
 st.markdown("This map shows the average electricity demand per country.")
 
-st.markdown("""
+st.markdown("""###
     <style>
     .glow {
         font-size: 36px;
@@ -53,7 +53,7 @@ st.markdown("""
     }
     </style>
 
-    <div class='glow'>Electricity Demand Forecasting</div>
+    <div class='glow'>Map to show Average Electricity Demand</div>
 """, unsafe_allow_html=True)
 
 
