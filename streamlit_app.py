@@ -368,19 +368,9 @@ with st.sidebar:
 
             prediction = model.predict(input_df)
 
-            # Styling fix
-            st.markdown("""
-                <style>
-                    .main .block-container {
-                        padding-left: 0rem;
-                        padding-right: 0rem;
-                    }
-                </style>
-            """, unsafe_allow_html=True)
-
             st.markdown(f"""
     <style>
-        @keyframes slideUp {{
+        @keyframes slideUpFade {{
             0% {{
                 transform: translateY(100%);
                 opacity: 0;
@@ -390,28 +380,41 @@ with st.sidebar:
                 opacity: 1;
             }}
         }}
-        .animated-result {{
-            animation: slideUp 1s ease-out forwards;
+        .result-card {{
+            animation: slideUpFade 1s ease-out forwards;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #ffffff;
+            font-family: 'Segoe UI', sans-serif;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 30px 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+            z-index: 10000;
+            opacity: 0;
+            width: fit-content;
+            max-width: 90vw;
+        }}
+        @media (max-width: 600px) {{
+            .result-card {{
+                font-size: 20px;
+                padding: 20px 25px;
+            }}
         }}
     </style>
 
-    <div class="animated-result" style='
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: #d4edda;
-        color: #155724;
-        padding: 40px 20px;
-        font-size: 28px;
-        font-weight: bold;
-        text-align: center;
-        border-top: 5px solid #28a745;
-        z-index: 9999;
-        opacity: 0;  /* Initial state for animation */
-    '>
-        Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
+    <div class="result-card">
+        ⚡ Predicted Electricity Demand for <span style="color:#00e6e6">{country}</span> in <strong>{year}</strong> is:<br><span style="font-size: 36px; color: #00ffcc">{prediction[0]:,.2f}</span> TWh
     </div>
 """, unsafe_allow_html=True)
+
 
 
