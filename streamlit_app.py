@@ -379,21 +379,39 @@ with st.sidebar:
             """, unsafe_allow_html=True)
 
             st.markdown(f"""
-                <div style='
-                    position: fixed;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                    background-color: #d4edda;
-                    color: #155724;
-                    padding: 40px 20px;
-                    font-size: 28px;
-                    font-weight: bold;
-                    text-align: center;
-                    border-top: 5px solid #28a745;
-                    z-index: 9999;
-                '>
-                    Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
-                </div>
-            """, unsafe_allow_html=True)
+    <style>
+        @keyframes slideUp {{
+            0% {{
+                transform: translateY(100%);
+                opacity: 0;
+            }}
+            100% {{
+                transform: translateY(0);
+                opacity: 1;
+            }}
+        }}
+        .animated-result {{
+            animation: slideUp 1s ease-out forwards;
+        }}
+    </style>
+
+    <div class="animated-result" style='
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #d4edda;
+        color: #155724;
+        padding: 40px 20px;
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        border-top: 5px solid #28a745;
+        z-index: 9999;
+        opacity: 0;  /* Initial state for animation */
+    '>
+        Predicted Electricity Demand for {country} in {year} is: {prediction[0]:,.2f}
+    </div>
+""", unsafe_allow_html=True)
+
 
