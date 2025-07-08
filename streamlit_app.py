@@ -46,31 +46,31 @@ st.markdown("""
 st.markdown("""
     <style>
     .input-indicator {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
-    .circle {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: lightgray;
-        border: 2px solid gray;
-    }
-    .circle.complete {
-        background-color: #28a745;
-        border: 2px solid #28a745;
-        position: relative;
-    }
-    .circle.complete::after {
-        content: '\\2713'; /* Unicode checkmark */
-        color: white;
-        font-size: 12px;
-        position: absolute;
-        top: -2px;
-        left: 3px;
-    }
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: lightgray;
+            border: 2px solid gray;
+        }
+        .circle.complete {
+            background-color: #28a745;
+            border: 2px solid #28a745;
+            position: relative;
+        }
+        .circle.complete::after {
+            content: '\\2713';
+            color: white;
+            font-size: 12px;
+            position: absolute;
+            top: -2px;
+            left: 3px;
+        }
     </style>
 """, unsafe_allow_html=True)
 
@@ -238,11 +238,18 @@ with st.expander('World Energy Consumption Dataset'):
   y = df.electricity_demand
   st.write(y)
 
+# Indicator tracking dictionary
+if 'completed_inputs' not in st.session_state:
+    st.session_state.completed_inputs = {}
+
 def input_with_indicator(label, min_val, max_val, default):
-    st.markdown(f"<div class='input-indicator'><div class='circle complete'></div><label>{label}</label></div>", unsafe_allow_html=True)
-    return st.slider(label, min_val, max_val, default)
-
-
+    key = f"slider_{label}"
+    val = st.slider(label, min_val, max_val, default, key=key)
+    is_complete = val != default
+    st.session_state.completed_inputs[key] = is_complete
+    circle_class = "circle complete" if is_complete else "circle"
+    st.markdown(f"<div class='input-indicator'><div class='{circle_class}'></div><label>{label}</label></div>", unsafe_allow_html=True)
+    return val
 
 with st.sidebar:
     st.header('Please input the required features')
