@@ -139,50 +139,42 @@ st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual
 
 
 
-with st.expander('Bar Chart'):
-    st.write("### Compare Countries by Feature")
+with st.expander("Pie Chart: Country Share of Selected Feature"):
+    st.write("### Pie Chart Based on Aggregated Values")
 
-    # Exclude 'year' and non-numeric columns
-    numeric_columns = df.select_dtypes(include=['float', 'int64']).columns.tolist()
-    numeric_columns = [col for col in numeric_columns if col != 'year']
+    # Let user select a numeric feature
+    selected_feature = st.selectbox(
+        "Select a feature for aggregation",
+        df.select_dtypes(include=['float', 'int64']).columns.tolist(),
+        key="pie"
+    )
 
-    selected_feature = st.selectbox("Select a feature to compare across countries", numeric_columns)
+    # Aggregate (mean) by country
+    agg_data = df.groupby('country')[selected_feature].mean().reset_index()
 
-    # Group by country and compute the mean for the selected feature
-    feature_by_country = df.groupby('country')[selected_feature].mean().reset_index()
+    # Drop countries with duplicate feature values
+    agg_data = agg_data.drop_duplicates(subset=[selected_feature])
 
-    # Remove countries with duplicate values of the selected feature
-    feature_by_country = feature_by_country.drop_duplicates(subset=[selected_feature])
+    # Sort and take top 10
+    agg_data = agg_data.sort_values(by=selected_feature, ascending=False).head(10)
 
-    # Sort and select top 20
-    feature_by_country = feature_by_country.sort_values(by=selected_feature, ascending=False).head(20)
-
-    # Plot bar chart
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        x=feature_by_country[selected_feature],
-        y=feature_by_country['country'],
-        orientation='h',
-        marker=dict(
-            color=feature_by_country[selected_feature],
-            colorscale='Viridis',
-            line=dict(width=1.5, color='gray')
-        ),
-        opacity=0.9,
-        hoverinfo='x+y'
-    ))
+    # Create pie chart
+    fig = go.Figure(data=[go.Pie(
+        labels=agg_data['country'],
+        values=agg_data[selected_feature],
+        hole=0.3,
+        pull=[0.05] * len(agg_data),
+        textinfo='label+percent',
+        marker=dict(line=dict(color='white', width=2))
+    )])
 
     fig.update_layout(
-        title=f'Average {selected_feature} by Country',
-        xaxis_title=f'Average {selected_feature}',
-        yaxis=dict(autorange="reversed"),
-        margin=dict(l=0, r=0, t=50, b=0),
-        height=600,
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='black'
+        title=f"Top 10 Unique Countries by Average {selected_feature}",
+        margin=dict(l=0, r=0, t=50, b=0)
     )
 
     st.plotly_chart(fig, use_container_width=True)
+
 
     
 with st.expander("Pie Chart: Country Share of Selected Feature"):
