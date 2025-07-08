@@ -146,7 +146,7 @@ with st.expander("Pie Chart: Country Share of Selected Feature"):
     selected_feature = st.selectbox(
         "Select a feature for aggregation",
         df.select_dtypes(include=['float', 'int64']).columns.tolist(),
-        key="pie"
+        key="bar"
     )
 
     # Aggregate (mean) by country
