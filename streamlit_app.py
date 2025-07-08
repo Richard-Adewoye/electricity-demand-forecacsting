@@ -242,28 +242,14 @@ with st.expander('World Energy Consumption Dataset'):
 if 'completed_inputs' not in st.session_state:
     st.session_state.completed_inputs = {}
 
-def input_with_indicator(label, key, min_value, max_value, default_value, step=1.0):
-    current_value = st.session_state.get(key, default_value)
-
-    # Track whether the value has changed from default
-    is_complete = current_value != default_value
-
-    # Indicator class
+def input_with_indicator(label, min_val, max_val, default):
+    key = f"slider_{label}"
+    val = st.slider(label, min_val, max_val, default, key=key)
+    is_complete = val != default
+    st.session_state.completed_inputs[key] = is_complete
     circle_class = "circle complete" if is_complete else "circle"
-
-    # Display the indicator and label
-    st.markdown(f"""
-        <div class="input-indicator">
-            <div class="{circle_class}"></div>
-            <div>{label}</div>
-        </div>
-    """, unsafe_allow_html=True)
-
-    # Show the slider with collapsed label
-    return st.slider(
-        label, min_value, max_value, value=current_value, step=step,
-        key=key, label_visibility="collapsed"
-    )
+    st.markdown(f"<div class='input-indicator'><div class='{circle_class}'></div><label>{label}</label></div>", unsafe_allow_html=True)
+    return val
 
 
 with st.sidebar:
