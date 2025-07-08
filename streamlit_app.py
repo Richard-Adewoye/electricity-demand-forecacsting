@@ -137,6 +137,50 @@ fig.update_layout(
 
 st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual size
 
+with st.expander('Bar Chart'):
+    st.write("### Compare Countries by Feature")
+
+    # Exclude 'year' and non-numeric columns
+    numeric_columns = df.select_dtypes(include=['float', 'int64']).columns.tolist()
+    numeric_columns = [col for col in numeric_columns if col != 'year']
+
+    selected_feature = st.selectbox("Select a feature to compare across countries", numeric_columns)
+
+    # Group by country and compute the mean for the selected feature
+    feature_by_country = df.groupby('country')[selected_feature].mean().reset_index()
+
+    # Remove countries with duplicate values of the selected feature
+    feature_by_country = feature_by_country.drop_duplicates(subset=[selected_feature])
+
+    # Sort and select top 20
+    feature_by_country = feature_by_country.sort_values(by=selected_feature, ascending=False).head(20)
+
+    # Plot bar chart
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=feature_by_country[selected_feature],
+        y=feature_by_country['country'],
+        orientation='h',
+        marker=dict(
+            color=feature_by_country[selected_feature],
+            colorscale='Viridis',
+            line=dict(width=1.5, color='gray')
+        ),
+        opacity=0.9,
+        hoverinfo='x+y'
+    ))
+
+    fig.update_layout(
+        title=f'Average {selected_feature} by Country',
+        xaxis_title=f'Average {selected_feature}',
+        yaxis=dict(autorange="reversed"),
+        margin=dict(l=0, r=0, t=50, b=0),
+        height=600,
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='black'
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
 
 
 with st.expander("Pie Chart: Country Share of Selected Feature"):
@@ -174,42 +218,6 @@ with st.expander("Pie Chart: Country Share of Selected Feature"):
     )
 
     st.plotly_chart(fig, use_container_width=True)
-
-
-    
-with st.expander("Pie Chart: Country Share of Selected Feature"):
-    st.write("### Pie Chart Based on Aggregated Values")
-
-    # Let user select a numeric feature
-    selected_feature = st.selectbox("Select a feature for aggregation", df.select_dtypes(include=['float', 'int64']).columns.tolist(), key="pie")
-    #countries_to_drop = ['ASEAN (Ember)', 'Africa', 'Africa (EI)', 'Africa (Ember)', 'Africa (Shift)', 'Asia', 'Asia & Oceania (EIA)', 'Asia (Ember)', 'Asia Pacific (EI)', 'Asia and Oceania (Shift)', 'Australia and New Zealand (EIA)', 'CIS (EI)', 'Central & South America (EIA)', 'Central America (EI)', 'Central and South America (Shift)', 'EU28 (Shift)', 'Eastern Africa (EI)', 'Eurasia (EIA)', 'Eurasia (Shift)', 'Europe', 'Europe (EI)', 'Europe (Ember)', 'Europe (Shift)', 'European Union (27)', 'French Polynesia', 'G20 (Ember)', 'G7 (Ember)', 'High-income countries', 'IEO - Africa (EIA)', 'IEO - Middle East (EIA)', 'IEO OECD - Europe (EIA)', 'Low-income countries', 'Lower-middle-income countries', 'Mexico, Chile, and other OECD Americas (EIA)', 'Middle Africa (EI)', 'Middle East (EI)', 'Non-OECD (EI)', 'Non-OECD (EI)', 'Non-OPEC (EI)', 'OECD (EI)', 'OECD (EIA)', 'OECD (Ember)', 'OECD (Shift)', 'OECD - Asia And Oceania (EIA)', 'OECD - Europe (EIA)', 'OECD - North America (EIA)', 'OPEC (EI)', 'OPEC (EIA)', 'OPEC (Shift)', 'OPEC - Africa (EIA)', 'OPEC - South America (EIA)', 'Oceania', 'Oceania (Ember)', 'Other Non-OECD - America (EIA)', 'Persian Gulf (EIA)', 'Reunion', 'South and Central America (EI)', 'U.S. Territories (EIA)', 'Upper-middle-income countries', 'Western Africa (EI)', 'Western Sahara', 'World']
-    #df = df[~df['country'].isin(countries_to_drop)]
-
-    # Aggregate (mean) by country
-    agg_data = df.groupby('country')[selected_feature].mean().reset_index()
-
-    # Sort and take top 10 for readability (optional)
-    agg_data = agg_data.sort_values(by=selected_feature, ascending=False).head(10)
-
-    # Create pie chart using Altair
-    
-    # Make sure you have agg_data ready with country and the selected feature
-    fig = go.Figure(data=[go.Pie(
-        labels=agg_data['country'],
-        values=agg_data[selected_feature],
-        hole=0.3,  # Optional: makes it look like a donut (more 3D-like)
-        pull=[0.05]*len(agg_data),  # Slightly pull all slices
-        textinfo='label+percent',
-        marker=dict(line=dict(color='white', width=2))
-    )])
-    
-    fig.update_layout(
-        title=f"Top 10 Countries by Average {selected_feature}",
-        margin=dict(l=0, r=0, t=50, b=0)
-    )
-    
-    st.plotly_chart(fig, use_container_width=True)
-
 
 with st.expander('World Energy Consumption Dataset'):
   st.write('**Raw Data**')
