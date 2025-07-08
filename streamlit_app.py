@@ -368,42 +368,7 @@ with st.sidebar:
 
             prediction = model.predict(input_df)
 
-            # Create a small dataframe with only the selected country and its predicted value
-highlight_df = pd.DataFrame({
-    'country': [country],
-    'predicted_demand': [prediction[0]]
-})
-
-fig = px.choropleth(
-    highlight_df,
-    locations='country',
-    locationmode='country names',
-    color='predicted_demand',
-    color_continuous_scale='Turbo',
-    range_color=(0, prediction[0] * 1.1),
-    labels={'predicted_demand': 'Electricity Demand (TWh)'},
-)
-
-fig.update_layout(
-    geo=dict(
-        showframe=False,
-        showcoastlines=False,
-        projection_type='orthographic',
-        showland=True,
-        landcolor='#eeeeee',
-        lakecolor='lightblue',
-        bgcolor='rgba(0,0,0,0)'
-    ),
-    margin=dict(l=0, r=0, t=10, b=0),
-    height=400,
-    paper_bgcolor='rgba(0,0,0,0)',
-    plot_bgcolor='rgba(0,0,0,0)'
-)
-
-st.markdown("### 🌍 Predicted Demand Map")
-st.plotly_chart(fig, use_container_width=True)
-
-
+            
 st.markdown(f"""
 <style>
 @keyframes slideUpFade {{
