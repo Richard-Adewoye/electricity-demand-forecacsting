@@ -102,6 +102,7 @@ st.info('Map to show Average Electricity Demand')
 
 # Compute average electricity demand per country
 avg_demand = df.groupby('country', as_index=False)['electricity_demand'].mean()
+avg_demand = df.drop(columns=['year'])
 avg_demand.columns = ['country', 'avg_electricity_demand']
 
 fig = px.choropleth(
