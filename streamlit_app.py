@@ -193,7 +193,7 @@ with st.expander("Pie Chart: Country Share of Selected Feature"):
 
     # Create pie chart using Altair
     
-    # Make sure you have `agg_data` ready with `country` and the selected feature
+    # Make sure you have agg_data ready with country and the selected feature
     fig = go.Figure(data=[go.Pie(
         labels=agg_data['country'],
         values=agg_data[selected_feature],
