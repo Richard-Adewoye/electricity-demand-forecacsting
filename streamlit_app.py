@@ -268,7 +268,7 @@ with st.sidebar:
     if country:
         country_encoded_value = mean_gdp_per_country[country]
 
-        year = input_with_indicator('year', 2023, 2100, 2025)
+        year = input_with_indicator('year_1', 2023, 2100, 2025)
         population = input_with_indicator('population', 1000000000, 6000000000, 3000000000)
         gdp = input_with_indicator('gdp', 134586329843, 912328463859, 123456789)
         coal_prod_change_pct = input_with_indicator('coal_prod_change_pct', 37.43, 90.32, 65.43)
