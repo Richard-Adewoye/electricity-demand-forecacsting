@@ -142,43 +142,48 @@ st.plotly_chart(fig, use_container_width=False)  # Set False to honor the manual
 with st.expander('Bar Chart'):
     st.write("### Compare Countries by Feature")
 
-    # Let user select a numeric feature
+    # Exclude 'year' and non-numeric columns
     numeric_columns = df.select_dtypes(include=['float', 'int64']).columns.tolist()
+    numeric_columns = [col for col in numeric_columns if col != 'year']
+
     selected_feature = st.selectbox("Select a feature to compare across countries", numeric_columns)
 
-    # Group by country and calculate average
+    # Group by country and compute the mean for the selected feature
     feature_by_country = df.groupby('country')[selected_feature].mean().reset_index()
 
-    # Sort by feature value descending
+    # Remove countries with duplicate values of the selected feature
+    feature_by_country = feature_by_country.drop_duplicates(subset=[selected_feature])
+
+    # Sort and select top 20
     feature_by_country = feature_by_country.sort_values(by=selected_feature, ascending=False).head(20)
 
-    # Create bar chart
+    # Plot bar chart
     fig = go.Figure()
-    
     fig.add_trace(go.Bar(
         x=feature_by_country[selected_feature],
         y=feature_by_country['country'],
         orientation='h',
         marker=dict(
             color=feature_by_country[selected_feature],
-            colorscale='Viridis',  # Try 'Cividis', 'Blues', etc.
-            line=dict(width=1.5, color='gray')  # Border simulates 3D
+            colorscale='Viridis',
+            line=dict(width=1.5, color='gray')
         ),
         opacity=0.9,
         hoverinfo='x+y'
     ))
-    
+
     fig.update_layout(
         title=f'Average {selected_feature} by Country',
         xaxis_title=f'Average {selected_feature}',
-        yaxis=dict(autorange="reversed"),  # So top values are at the top
+        yaxis=dict(autorange="reversed"),
         margin=dict(l=0, r=0, t=50, b=0),
         height=600,
         plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='black'  # Or set to black for dark mode
+        paper_bgcolor='black'
     )
-    
+
     st.plotly_chart(fig, use_container_width=True)
+
     
 with st.expander("Pie Chart: Country Share of Selected Feature"):
     st.write("### Pie Chart Based on Aggregated Values")
